@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en" data-md-color-scheme="default">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Traffic Routing - Apache Dubbo Inherent Mesh</title>
+  <link rel="canonical" href="https://kdubbo.github.io/en/tasks/traffic/routing/routing/">
+  <link rel="icon" href="../../../../../assets/static/logo.ico">
+  <meta name="generator" content="mkdocs-1.6.1">
+  <link rel="stylesheet" href="../../../../../assets/kd-theme.css?v=20260820-r2">
+  <link rel="stylesheet" href="../../../../../assets/custom.css?v=20260809-responsive-r1">
+  <script id="__config" type="application/json">{"base": "../../../..", "lang": "en"}</script>
+  
+</head>
+<body dir="ltr">
+
+<aside class="kd-build-notice" role="status" aria-label="Documentation status">
+  <span>
+    Documentation is under construction. All content is currently unavailable. A new version is coming soon.
+  </span>
+</aside>
+
+<input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+<input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+<label class="md-overlay" for="__drawer"></label>
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Apache Dubbo Inherent Mesh">
+    <a href="../../../../" class="md-header__button md-logo" aria-label="Apache Dubbo Inherent Mesh">
+      <img src="../../../../../assets/static/logo.png" alt="logo">
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="Menu">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title">
+      <div class="md-header__ellipsis">
+        <span class="md-header__topic">Apache Dubbo Inherent Mesh</span>
+      </div>
+    </div>
+    <div class="md-header__spacer"></div><div class="md-search" role="search">
+      <div class="md-search__inner">
+        <form class="md-search__form" autocomplete="off" onsubmit="return false">
+          <input type="search" class="md-search__input" name="query" aria-label="Search"
+                 placeholder="Search" autocapitalize="off" autocorrect="off" spellcheck="false">
+          <label class="md-search__icon md-icon" for="__search" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+          </label>
+        </form>
+        <div class="md-search__output">
+          <div class="md-search__scrollwrap">
+            <div class="md-search-result">
+              <ol class="md-search-result__list" role="presentation"></ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+
+<div class="md-container" data-md-component="container">
+  <main class="md-main" data-md-component="main">
+    <div class="md-main__inner md-grid">
+      <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+        <div class="md-sidebar__scrollwrap">
+          <div class="md-sidebar__inner">
+            <nav class="md-nav md-nav--primary" aria-label="Navigation">
+              <ul class="md-nav__list" data-md-scrollfix>
+                
+    <li class="md-nav__item">
+      <a href="../../../../" class="md-nav__link">Home</a>
+    </li>
+                
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n2">
+      <div class="md-nav__container">
+        <a href="../../../../overview/" class="md-nav__link">Overview</a>
+        <label class="md-nav__link md-nav__chevron" for="__nav-n2" aria-label="Overview"><span class="md-nav__icon md-icon"></span></label>
+      </div>
+      <nav class="md-nav" aria-label="Overview">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n2-2">
+      <label class="md-nav__link" for="__nav-n2-2">Basic Concepts<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Basic Concepts">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../../../concepts/traffic-management/" class="md-nav__link">Traffic Management</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../../concepts/security/" class="md-nav__link">Security</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../../concepts/observability/" class="md-nav__link">Observability</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../../concepts/extensibility/" class="md-nav__link">Extensibility</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../../concepts/scalability/" class="md-nav__link">Scalability</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+        </ul>
+      </nav>
+    </li>
+                
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n3">
+      <label class="md-nav__link" for="__nav-n3">Installation<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Installation">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../../../setup/install/dubboctl/" class="md-nav__link">Dubboctl</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../../setup/install/helm/" class="md-nav__link">Helm</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../../setup/install/multicluster/" class="md-nav__link">Multicluster</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+                
+    <li class="md-nav__item md-nav__item--nested md-nav__item--active">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4" checked>
+      <label class="md-nav__link" for="__nav-n4">Tasks<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Tasks">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item md-nav__item--nested md-nav__item--active">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-1" checked>
+      <label class="md-nav__link" for="__nav-n4-1">Traffic Management<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Traffic Management">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item md-nav__item--active">
+      <a href="./" class="md-nav__link" aria-current="page">Traffic Routing</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../canary/canary/" class="md-nav__link">Traffic Splitting</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../request-timeouts/request-timeouts/" class="md-nav__link">请求超时</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../request-retries/request-retries/" class="md-nav__link">请求重试</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../fault-injection/fault-injection/" class="md-nav__link">故障注入</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../circuit-breaking/circuit-breaking/" class="md-nav__link">熔断</a>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-1-7">
+      <label class="md-nav__link" for="__nav-n4-1-7">Gateway<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Gateway">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../ingress/gateway-api/" class="md-nav__link">Ingress</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../egress/egress/" class="md-nav__link">Egress</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+        </ul>
+      </nav>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-2">
+      <label class="md-nav__link" for="__nav-n4-2">Security<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Security">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../../security/mtls/" class="md-nav__link">mTLS</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../security/jwt/" class="md-nav__link">JWT 认证与授权</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-3">
+      <label class="md-nav__link" for="__nav-n4-3">Observability<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Observability">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../../observability/metrics/metrics/" class="md-nav__link">指标</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../observability/logs/logs/" class="md-nav__link">日志</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-4">
+      <label class="md-nav__link" for="__nav-n4-4">Extensibility<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Extensibility">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../../extensibility/service-entry/" class="md-nav__link">网格服务</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../extensibility/virtual-machines/" class="md-nav__link">非网格服务</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-5">
+      <label class="md-nav__link" for="__nav-n4-5">Scalability<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Scalability">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../../scalability/activation/" class="md-nav__link">On-Demand Activation</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+        </ul>
+      </nav>
+    </li>
+                
+    <li class="md-nav__item">
+      <a href="../../../../example/moviereview/" class="md-nav__link">Example</a>
+    </li>
+                
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n6">
+      <label class="md-nav__link" for="__nav-n6">参考<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="参考">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../../../reference/application-standard-metrics/" class="md-nav__link">应用程序标准指标</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../../dxgate/cost-control/" class="md-nav__link">dxgate cost control</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+                
+    <li class="md-nav__item">
+      <a href="../../../../operation/" class="md-nav__link">Operations</a>
+    </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+        <div class="md-sidebar__scrollwrap">
+          <div class="md-sidebar__inner">
+            <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+              <span class="md-nav__title">On this page</span>
+              <ul class="md-nav__list">
+                
+  <li class="md-nav__item">
+    <a href="#uri" class="md-nav__link">URI 路由</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#header" class="md-nav__link">Header 路由</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#_1" class="md-nav__link">查看资源</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#_2" class="md-nav__link">验证</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#_3" class="md-nav__link">清理</a>
+  </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="md-content" data-md-component="content">
+        <article class="md-content__inner md-typeset">
+          
+          <blockquote>
+<p>未完成撰写的文档，因为版本迭代过快，跟新版本会存在一定差异，后续会进行补充完善。</p>
+<p>本任务使用 <code>moviereview</code> 示例。</p>
+</blockquote>
+<h2 id="uri">URI 路由<a class="headerlink" href="#uri" title="Permanent link">&para;</a></h2>
+<p>下面的规则把绑定到 <code>moviepage</code> 服务，根据 URI 前缀把请求转发到 <code>details</code> 或 <code>reviews</code>。 <code>rules</code> 按顺序匹配。把精确规则放在前面，把更宽泛的规则放在后面，不写 <code>matches</code> 的规则作为默认兜底。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="s">apiVersion: gateway.networking.k8s.io/v1</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="s">kind: HTTPRoute</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="s">metadata:</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="s">  name: moviepage-routing</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="s">  namespace: moviereview</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="s">spec:</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="s">  parentRefs:</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="s">  - group: ""</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="s">    kind: Service</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="s">    name: moviepage</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="s">    port: 9080</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="s">  rules:</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="s">  - matches:</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="s">    - path:</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="s">        type: PathPrefix</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="s">        value: /details</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="s">    backendRefs:</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="s">    - name: details</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="s">      port: 9080</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="s">  - matches:</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="s">    - path:</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="s">        type: PathPrefix</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="s">        value: /reviews</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="s">    backendRefs:</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="s">    - name: reviews</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="s">      port: 9080</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="s">EOF</span>
+</span></code></pre></div>
+<h2 id="header">Header 路由<a class="headerlink" href="#header" title="Permanent link">&para;</a></h2>
+<p>下面的规则把绑定到 <code>reviews</code> 服务。<code>jason</code> 用户的请求进入 <code>reviews-v1</code>，其余流量按权重进入 <code>reviews-v2</code> 和 <code>reviews-v3</code>。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="s">apiVersion: gateway.networking.k8s.io/v1</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="s">kind: HTTPRoute</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="s">metadata:</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="s">  name: reviews-routing</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="s">  namespace: moviereview</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="s">spec:</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="s">  parentRefs:</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="s">  - group: ""</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="s">    kind: Service</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="s">    name: reviews</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="s">    port: 9080</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="s">  rules:</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="s">  - matches:</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="s">    - headers:</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="s">      - name: end-user</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="s">        value: jason</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="s">    backendRefs:</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="s">    - name: reviews-v1</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="s">      port: 9080</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="s">      weight: 100</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="s">  - backendRefs:</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="s">    - name: reviews-v2</span>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="s">      port: 9080</span>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="s">      weight: 20</span>
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="s">    - name: reviews-v3</span>
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="s">      port: 9080</span>
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="s">      weight: 80</span>
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="s">EOF</span>
+</span></code></pre></div>
+<h2 id="_1">查看资源<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kubectl<span class="w"> </span>get<span class="w"> </span>httproute<span class="w"> </span>-n<span class="w"> </span>moviereview
+</span></code></pre></div>
+<h2 id="_2">验证<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>默认提供 <code>proto.XDSTestService/ForwardHTTP</code> 测试入口。先把 17171 转发到本地，后续 <code>grpcurl</code> 都打这个端口。带 <code>end-user: jason</code> Header 的请求会触发 Header 路由。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>dubbo-system<span class="w"> </span>port-forward<span class="w"> </span>deploy/dubbod<span class="w"> </span><span class="m">17171</span>:17171
+</span></code></pre></div>
+<p>确认 <code>/details</code> 被路由到 <code>details</code>：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>grpcurl<span class="w"> </span>-plaintext<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">'{"url":"xds:///moviepage.moviereview.svc.cluster.local:9080","path":"/details"}'</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span>:17171<span class="w"> </span>proto.XDSTestService/ForwardHTTP<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">'.output[0]'</span>
+</span></code></pre></div>
+<p>预期能看到 <code>details</code> 返回的电影详情：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>{"title":"银河补习班","year":2019,"director":"Deng Chao",...}
+</span></code></pre></div>
+<p>确认 <code>/reviews</code> 被路由到 <code>reviews</code>：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>grpcurl<span class="w"> </span>-plaintext<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">'{"url":"xds:///moviepage.moviereview.svc.cluster.local:9080","path":"/reviews","count":5}'</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span>:17171<span class="w"> </span>proto.XDSTestService/ForwardHTTP<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">'.output | join("")'</span>
+</span></code></pre></div>
+<p>预期能看到 <code>reviews</code> 返回：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>reviews v1
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>reviews v2
+</span></code></pre></div>
+<p>确认带 <code>jason</code> Header 的请求只进入 <code>v1</code>：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>grpcurl<span class="w"> </span>-plaintext<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">'{"url":"xds:///reviews.moviereview.svc.cluster.local:9080","path":"/reviews","count":5,"headers":["end-user=jason"]}'</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span>:17171<span class="w"> </span>proto.XDSTestService/ForwardHTTP<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">'.output | join("")'</span>
+</span></code></pre></div>
+<p>预期请求返回只包含 <code>v1</code>：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>reviews v1
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>reviews v1
+</span></code></pre></div>
+<p>也可以登录 <code>jason</code> 后刷新 <code>frontend</code> 页面验证。页面里的 moviepage 会通过本地 <code>reviews-grpc-outbound</code> 调用 <code>reviews</code>，登录 <code>jason</code> 时页面上的 reviews 版本应保持 <code>v1</code>。</p>
+<p>确认不带 <code>end-user</code> Header 的请求按默认权重进入 <code>v2</code> 和 <code>v3</code>：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>grpcurl<span class="w"> </span>-plaintext<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">'{"url":"xds:///reviews.moviereview.svc.cluster.local:9080","path":"/reviews","count":5}'</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span>:17171<span class="w"> </span>proto.XDSTestService/ForwardHTTP<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">'.output | join("")'</span>
+</span></code></pre></div>
+<p>预期请求返回只包含 <code>v2</code> 和 <code>v3</code>：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>reviews v3
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>reviews v2
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>reviews v3
+</span></code></pre></div>
+<h2 id="_3">清理<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>kubectl<span class="w"> </span>delete<span class="w"> </span>httproute<span class="w"> </span>moviepage-routing<span class="w"> </span>-n<span class="w"> </span>moviereview
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>kubectl<span class="w"> </span>delete<span class="w"> </span>httproute<span class="w"> </span>reviews-routing<span class="w"> </span>-n<span class="w"> </span>moviereview
+</span></code></pre></div>
+          
+        </article>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+
+<footer class="md-footer">
+  <nav class="md-footer__inner md-grid" aria-label="Footer">
+    <a href="../../../../setup/install/multicluster/" class="md-footer__link md-footer__link--prev" rel="prev">
+      <div class="md-footer__button md-icon">
+        <svg viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </div>
+      <div class="md-footer__title">
+        <span class="md-footer__direction">Previous</span>
+        <div class="md-ellipsis">Multicluster</div>
+      </div>
+    </a>
+    <a href="../../canary/canary/" class="md-footer__link md-footer__link--next" rel="next">
+      <div class="md-footer__title">
+        <span class="md-footer__direction">Next</span>
+        <div class="md-ellipsis">Traffic Splitting</div>
+      </div>
+      <div class="md-footer__button md-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+      </div>
+    </a>
+  </nav>
+  <div class="md-footer-meta">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">Copyright © 2026 The Apache Kdubbo Team.</div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="../../../../../assets/kd-theme.js?v=20260726-r2"></script>
+<script src="../../../../../assets/custom.js?v=20260726-r2"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+<script src="../../../../../assets/mermaid-init.js?v=20260809-responsive-r1"></script>
+<script src="../../../../../search/main.js"></script>
+</body>
+</html>

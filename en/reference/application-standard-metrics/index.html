@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en" data-md-color-scheme="default">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>应用程序标准指标 - Apache Dubbo Inherent Mesh</title>
+  <link rel="canonical" href="https://kdubbo.github.io/en/reference/application-standard-metrics/">
+  <link rel="icon" href="../../../assets/static/logo.ico">
+  <meta name="generator" content="mkdocs-1.6.1">
+  <link rel="stylesheet" href="../../../assets/kd-theme.css?v=20260820-r2">
+  <link rel="stylesheet" href="../../../assets/custom.css?v=20260809-responsive-r1">
+  <script id="__config" type="application/json">{"base": "../..", "lang": "en"}</script>
+  
+</head>
+<body dir="ltr">
+
+<aside class="kd-build-notice" role="status" aria-label="Documentation status">
+  <span>
+    Documentation is under construction. All content is currently unavailable. A new version is coming soon.
+  </span>
+</aside>
+
+<input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+<input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+<label class="md-overlay" for="__drawer"></label>
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Apache Dubbo Inherent Mesh">
+    <a href="../../" class="md-header__button md-logo" aria-label="Apache Dubbo Inherent Mesh">
+      <img src="../../../assets/static/logo.png" alt="logo">
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="Menu">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title">
+      <div class="md-header__ellipsis">
+        <span class="md-header__topic">Apache Dubbo Inherent Mesh</span>
+      </div>
+    </div>
+    <div class="md-header__spacer"></div><div class="md-search" role="search">
+      <div class="md-search__inner">
+        <form class="md-search__form" autocomplete="off" onsubmit="return false">
+          <input type="search" class="md-search__input" name="query" aria-label="Search"
+                 placeholder="Search" autocapitalize="off" autocorrect="off" spellcheck="false">
+          <label class="md-search__icon md-icon" for="__search" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+          </label>
+        </form>
+        <div class="md-search__output">
+          <div class="md-search__scrollwrap">
+            <div class="md-search-result">
+              <ol class="md-search-result__list" role="presentation"></ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+
+<div class="md-container" data-md-component="container">
+  <main class="md-main" data-md-component="main">
+    <div class="md-main__inner md-grid">
+      <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+        <div class="md-sidebar__scrollwrap">
+          <div class="md-sidebar__inner">
+            <nav class="md-nav md-nav--primary" aria-label="Navigation">
+              <ul class="md-nav__list" data-md-scrollfix>
+                
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">Home</a>
+    </li>
+                
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n2">
+      <div class="md-nav__container">
+        <a href="../../overview/" class="md-nav__link">Overview</a>
+        <label class="md-nav__link md-nav__chevron" for="__nav-n2" aria-label="Overview"><span class="md-nav__icon md-icon"></span></label>
+      </div>
+      <nav class="md-nav" aria-label="Overview">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n2-2">
+      <label class="md-nav__link" for="__nav-n2-2">Basic Concepts<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Basic Concepts">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../concepts/traffic-management/" class="md-nav__link">Traffic Management</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../concepts/security/" class="md-nav__link">Security</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../concepts/observability/" class="md-nav__link">Observability</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../concepts/extensibility/" class="md-nav__link">Extensibility</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../concepts/scalability/" class="md-nav__link">Scalability</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+        </ul>
+      </nav>
+    </li>
+                
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n3">
+      <label class="md-nav__link" for="__nav-n3">Installation<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Installation">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../setup/install/dubboctl/" class="md-nav__link">Dubboctl</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../setup/install/helm/" class="md-nav__link">Helm</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../setup/install/multicluster/" class="md-nav__link">Multicluster</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+                
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4">
+      <label class="md-nav__link" for="__nav-n4">Tasks<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Tasks">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-1">
+      <label class="md-nav__link" for="__nav-n4-1">Traffic Management<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Traffic Management">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../tasks/traffic/routing/routing/" class="md-nav__link">Traffic Routing</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../tasks/traffic/canary/canary/" class="md-nav__link">Traffic Splitting</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../tasks/traffic/request-timeouts/request-timeouts/" class="md-nav__link">请求超时</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../tasks/traffic/request-retries/request-retries/" class="md-nav__link">请求重试</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../tasks/traffic/fault-injection/fault-injection/" class="md-nav__link">故障注入</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../tasks/traffic/circuit-breaking/circuit-breaking/" class="md-nav__link">熔断</a>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-1-7">
+      <label class="md-nav__link" for="__nav-n4-1-7">Gateway<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Gateway">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../tasks/traffic/ingress/gateway-api/" class="md-nav__link">Ingress</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../tasks/traffic/egress/egress/" class="md-nav__link">Egress</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+        </ul>
+      </nav>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-2">
+      <label class="md-nav__link" for="__nav-n4-2">Security<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Security">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../tasks/security/mtls/" class="md-nav__link">mTLS</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../tasks/security/jwt/" class="md-nav__link">JWT 认证与授权</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-3">
+      <label class="md-nav__link" for="__nav-n4-3">Observability<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Observability">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../tasks/observability/metrics/metrics/" class="md-nav__link">指标</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../tasks/observability/logs/logs/" class="md-nav__link">日志</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-4">
+      <label class="md-nav__link" for="__nav-n4-4">Extensibility<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Extensibility">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../tasks/extensibility/service-entry/" class="md-nav__link">网格服务</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../tasks/extensibility/virtual-machines/" class="md-nav__link">非网格服务</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-5">
+      <label class="md-nav__link" for="__nav-n4-5">Scalability<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Scalability">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../tasks/scalability/activation/" class="md-nav__link">On-Demand Activation</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+        </ul>
+      </nav>
+    </li>
+                
+    <li class="md-nav__item">
+      <a href="../../example/moviereview/" class="md-nav__link">Example</a>
+    </li>
+                
+    <li class="md-nav__item md-nav__item--nested md-nav__item--active">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n6" checked>
+      <label class="md-nav__link" for="__nav-n6">参考<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="参考">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item md-nav__item--active">
+      <a href="./" class="md-nav__link" aria-current="page">应用程序标准指标</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../dxgate/cost-control/" class="md-nav__link">dxgate cost control</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+                
+    <li class="md-nav__item">
+      <a href="../../operation/" class="md-nav__link">Operations</a>
+    </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+        <div class="md-sidebar__scrollwrap">
+          <div class="md-sidebar__inner">
+            <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+              <span class="md-nav__title">On this page</span>
+              <ul class="md-nav__list">
+                
+  <li class="md-nav__item">
+    <a href="#_2" class="md-nav__link">指标类型</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#_3" class="md-nav__link">标准指标</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#_4" class="md-nav__link">标准标签</a>
+  </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="md-content" data-md-component="content">
+        <article class="md-content__inner md-typeset">
+          
+          <h1 id="_1">应用标准指标<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>应用标准指标由 Inherent gRPC 运行时在应用进程内生成，不依赖代理工作负载。Application SDK 创建 gRPC Client 和 Server 时自动接入采集；控制面自动注入指标端点和 Prometheus 抓取声明，业务代码不需要手动注册 <code>/metrics</code>。Telemetry API 负责开启指标并定制作用域和标签，不负责定义指标本身。</p>
+<h2 id="_2">指标类型<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>语义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>COUNTER</code></td>
+<td>进程生命周期内严格递增；Prometheus 使用 <code>_total</code> 计数器。</td>
+</tr>
+<tr>
+<td><code>DISTRIBUTION</code></td>
+<td>把观测值写入固定区间；Prometheus 暴露 histogram 的 <code>_bucket</code>、<code>_sum</code>、<code>_count</code>。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_3">标准指标<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>启用 <code>prometheus</code> provider 后，Client 和 Server 默认生成以下指标：</p>
+<table>
+<thead>
+<tr>
+<th>标准指标</th>
+<th>Prometheus 指标</th>
+<th>类型</th>
+<th>必须提供的原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>REQUEST_COUNT</code></td>
+<td><code>dubbo_inherent_requests_total</code></td>
+<td><code>COUNTER</code></td>
+<td>表示吞吐量；结合状态标签计算成功率和错误率。</td>
+</tr>
+<tr>
+<td><code>REQUEST_DURATION</code></td>
+<td><code>dubbo_inherent_request_duration_seconds</code></td>
+<td><code>DISTRIBUTION</code></td>
+<td>表示端到端 RPC 延迟，用于分位数和 SLO。</td>
+</tr>
+<tr>
+<td><code>REQUEST_SIZE</code></td>
+<td><code>dubbo_inherent_request_size_bytes</code></td>
+<td><code>DISTRIBUTION</code></td>
+<td>发现大请求及其带来的序列化、内存和带宽压力。</td>
+</tr>
+<tr>
+<td><code>RESPONSE_SIZE</code></td>
+<td><code>dubbo_inherent_response_size_bytes</code></td>
+<td><code>DISTRIBUTION</code></td>
+<td>发现大响应及其带来的内存和带宽压力。</td>
+</tr>
+</tbody>
+</table>
+<p>不单独提供错误计数：<code>REQUEST_COUNT</code> 按 <code>grpc_response_status</code> 分组后已经能准确计算错误率，重复指标只会增加存储和查询成本。</p>
+<h2 id="_4">标准标签<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>四个标准指标使用相同标签：</p>
+<table>
+<thead>
+<tr>
+<th>标签</th>
+<th>值</th>
+<th>保留原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>reporter</code></td>
+<td><code>client</code> 或 <code>server</code></td>
+<td>区分观测侧，避免把两端计数误当成一次请求。</td>
+</tr>
+<tr>
+<td><code>grpc_service</code></td>
+<td>gRPC service 全名</td>
+<td>定位服务，同时避免使用 Pod 等高基数身份。</td>
+</tr>
+<tr>
+<td><code>grpc_method</code></td>
+<td>gRPC method 名</td>
+<td>定位具体操作。</td>
+</tr>
+<tr>
+<td><code>grpc_response_status</code></td>
+<td>标准 gRPC status code</td>
+<td>区分成功和失败并计算错误率。</td>
+</tr>
+</tbody>
+</table>
+<p>Prometheus 发现阶段附加的 <code>namespace</code>、<code>pod</code>、<code>instance</code> 不属于应用标准标签。Telemetry <code>tags</code> 只允许对上述标准标签执行 <code>REMOVE</code>；未知标签会被拒绝。</p>
+<p>配置方式见<a href="../../tasks/observability/metrics/metrics/">指标任务</a>。</p>
+          
+        </article>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+
+<footer class="md-footer">
+  <nav class="md-footer__inner md-grid" aria-label="Footer">
+    <a href="../../example/moviereview/" class="md-footer__link md-footer__link--prev" rel="prev">
+      <div class="md-footer__button md-icon">
+        <svg viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </div>
+      <div class="md-footer__title">
+        <span class="md-footer__direction">Previous</span>
+        <div class="md-ellipsis">Example</div>
+      </div>
+    </a>
+    <a href="../../dxgate/cost-control/" class="md-footer__link md-footer__link--next" rel="next">
+      <div class="md-footer__title">
+        <span class="md-footer__direction">Next</span>
+        <div class="md-ellipsis">dxgate cost control</div>
+      </div>
+      <div class="md-footer__button md-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+      </div>
+    </a>
+  </nav>
+  <div class="md-footer-meta">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">Copyright © 2026 The Apache Kdubbo Team.</div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="../../../assets/kd-theme.js?v=20260726-r2"></script>
+<script src="../../../assets/custom.js?v=20260726-r2"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+<script src="../../../assets/mermaid-init.js?v=20260809-responsive-r1"></script>
+<script src="../../../search/main.js"></script>
+</body>
+</html>

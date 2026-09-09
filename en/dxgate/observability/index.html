@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en" data-md-color-scheme="default">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Observability - Apache Dubbo Inherent Mesh</title>
+  <link rel="canonical" href="https://kdubbo.github.io/en/dxgate/observability/">
+  <link rel="icon" href="../../../assets/static/logo.ico">
+  <meta name="generator" content="mkdocs-1.6.1">
+  <link rel="stylesheet" href="../../../assets/kd-theme.css?v=20260820-r2">
+  <link rel="stylesheet" href="../../../assets/custom.css?v=20260809-responsive-r1">
+  <script id="__config" type="application/json">{"base": "../..", "lang": "en"}</script>
+  
+</head>
+<body dir="ltr">
+
+<aside class="kd-build-notice" role="status" aria-label="Documentation status">
+  <span>
+    Documentation is under construction. All content is currently unavailable. A new version is coming soon.
+  </span>
+</aside>
+
+<input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+<input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+<label class="md-overlay" for="__drawer"></label>
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Apache Dubbo Inherent Mesh">
+    <a href="../../" class="md-header__button md-logo" aria-label="Apache Dubbo Inherent Mesh">
+      <img src="../../../assets/static/logo.png" alt="logo">
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="Menu">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title">
+      <div class="md-header__ellipsis">
+        <span class="md-header__topic">Apache Dubbo Inherent Mesh</span>
+      </div>
+    </div>
+    <div class="md-header__spacer"></div><div class="md-search" role="search">
+      <div class="md-search__inner">
+        <form class="md-search__form" autocomplete="off" onsubmit="return false">
+          <input type="search" class="md-search__input" name="query" aria-label="Search"
+                 placeholder="Search" autocapitalize="off" autocorrect="off" spellcheck="false">
+          <label class="md-search__icon md-icon" for="__search" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+          </label>
+        </form>
+        <div class="md-search__output">
+          <div class="md-search__scrollwrap">
+            <div class="md-search-result">
+              <ol class="md-search-result__list" role="presentation"></ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+
+<div class="md-container" data-md-component="container">
+  <main class="md-main" data-md-component="main">
+    <div class="md-main__inner md-grid">
+      <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+        <div class="md-sidebar__scrollwrap">
+          <div class="md-sidebar__inner">
+            <nav class="md-nav md-nav--primary kd-nav--standalone" aria-label="dxgate">
+              <ul class="md-nav__list" data-md-scrollfix>
+                <li class="md-nav__item md-nav__item--nested">
+                  <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-dx1">
+                  <label class="md-nav__link" for="__nav-dx1">Concepts<span class="md-nav__icon md-icon"></span></label>
+                  <nav class="md-nav" aria-label="Concepts">
+                    <ul class="md-nav__list">
+                      <li class="md-nav__item">
+                        <a href="../" class="md-nav__link">What is dxgate</a>
+                      </li>
+                      <li class="md-nav__item">
+                        <a href="../architecture/" class="md-nav__link">Architecture</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </li>
+                <li class="md-nav__item md-nav__item--nested">
+                  <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-dx2">
+                  <label class="md-nav__link" for="__nav-dx2">Service routing<span class="md-nav__icon md-icon"></span></label>
+                  <nav class="md-nav" aria-label="Service routing">
+                    <ul class="md-nav__list">
+                      <li class="md-nav__item">
+                        <a href="../http-service/" class="md-nav__link">Ordinary Service</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </li>
+                <li class="md-nav__item md-nav__item--nested">
+                  <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-dx3">
+                  <label class="md-nav__link" for="__nav-dx3">LLM<span class="md-nav__icon md-icon"></span></label>
+                  <nav class="md-nav" aria-label="LLM">
+                    <ul class="md-nav__list">
+                      <li class="md-nav__item">
+                        <a href="../llm/" class="md-nav__link">LLM routing</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </li>
+                <li class="md-nav__item md-nav__item--nested">
+                  <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-dx4">
+                  <label class="md-nav__link" for="__nav-dx4">MCP<span class="md-nav__icon md-icon"></span></label>
+                  <nav class="md-nav" aria-label="MCP">
+                    <ul class="md-nav__list">
+                      <li class="md-nav__item">
+                        <a href="../mcp/" class="md-nav__link">MCP routing</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </li>
+                <li class="md-nav__item md-nav__item--nested">
+                  <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-dx5">
+                  <label class="md-nav__link" for="__nav-dx5">Agent<span class="md-nav__icon md-icon"></span></label>
+                  <nav class="md-nav" aria-label="Agent">
+                    <ul class="md-nav__list">
+                      <li class="md-nav__item">
+                        <a href="../a2a/" class="md-nav__link">A2A forwarding</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+        <div class="md-sidebar__scrollwrap">
+          <div class="md-sidebar__inner">
+            <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+              <span class="md-nav__title">On this page</span>
+              <ul class="md-nav__list">
+                
+  <li class="md-nav__item">
+    <a href="#admin-port" class="md-nav__link">Admin port</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#metrics" class="md-nav__link">Metrics</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#access-logs" class="md-nav__link">Access logs</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#tracing" class="md-nav__link">Tracing</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#quota-management-quota-windows-timeline" class="md-nav__link">Quota Management &amp; Quota Windows Timeline</a>
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+  <li class="md-nav__item">
+    <a href="#1-three-track-compute-pool-quota-views" class="md-nav__link">1. Three-Track Compute Pool Quota Views</a>
+  </li>
+        
+  <li class="md-nav__item">
+    <a href="#2-quota-windows-timeline" class="md-nav__link">2. Quota Windows Timeline</a>
+  </li>
+      </ul>
+    </nav>
+  </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="md-content" data-md-component="content">
+        <article class="md-content__inner md-typeset">
+          
+          <h1 id="observability">Observability<a class="headerlink" href="#observability" title="Permanent link">&para;</a></h1>
+<p>Metrics, logs, and traces all come out of the admin port or standard output — no extra sidecar. The admin port defaults to <code>0.0.0.0:15021</code> and stays separate from the data port so it can be kept inside the cluster.</p>
+<h2 id="admin-port">Admin port<a class="headerlink" href="#admin-port" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/healthz</code></td>
+<td>Liveness probe, returns build info</td>
+</tr>
+<tr>
+<td><code>/readyz</code></td>
+<td>Readiness probe, with <code>revision</code>, per-source versions, and conflicts</td>
+</tr>
+<tr>
+<td><code>/metrics</code></td>
+<td>Prometheus metrics</td>
+</tr>
+<tr>
+<td><code>/debug/config</code></td>
+<td>The full runtime configuration currently in effect</td>
+</tr>
+<tr>
+<td><code>/debug/cost</code></td>
+<td>API USD + ChatGPT credits ledger</td>
+</tr>
+<tr>
+<td><code>/debug/routes</code></td>
+<td>Route view</td>
+</tr>
+<tr>
+<td><code>/debug/clusters</code></td>
+<td>Cluster and endpoint view</td>
+</tr>
+<tr>
+<td><code>/debug/backends</code></td>
+<td>Agent backend view</td>
+</tr>
+<tr>
+<td><code>/debug/policies</code></td>
+<td>Policy view, including what each policy is attached to</td>
+</tr>
+<tr>
+<td><code>/debug/sources</code></td>
+<td>Who owns each resource, and the version each source last reported</td>
+</tr>
+<tr>
+<td><code>/ui</code></td>
+<td>Built-in admin interface</td>
+</tr>
+</tbody>
+</table>
+<p>When a change seems not to have landed, start at <code>/readyz</code>: <code>revision</code> rises on every applied delta, <code>source_versions</code> shows what each source last reported, and <code>conflicts</code> lists unresolved references. To find out which side a resource came from, read <code>/debug/sources</code>.</p>
+<h2 id="metrics">Metrics<a class="headerlink" href="#metrics" title="Permanent link">&para;</a></h2>
+<p>Unlabelled global counters:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Type</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dxgate_ready</code></td>
+<td>gauge</td>
+<td>Whether runtime configuration has been accepted</td>
+</tr>
+<tr>
+<td><code>dxgate_config_conflicts</code></td>
+<td>gauge</td>
+<td>Unresolved references in the merged configuration</td>
+</tr>
+<tr>
+<td><code>dxgate_requests_total</code></td>
+<td>counter</td>
+<td>Requests observed</td>
+</tr>
+<tr>
+<td><code>dxgate_agent_requests_total</code></td>
+<td>counter</td>
+<td>Of those, agent-protocol requests</td>
+</tr>
+<tr>
+<td><code>dxgate_policy_denied_total</code></td>
+<td>counter</td>
+<td>Requests denied by policy</td>
+</tr>
+<tr>
+<td><code>dxgate_upstream_failures_total</code></td>
+<td>counter</td>
+<td>Upstream failures</td>
+</tr>
+</tbody>
+</table>
+<p>HTTP gateway traffic is broken down by route and cluster, labelled <code>namespace</code>, <code>gateway</code>, <code>route</code>, <code>cluster</code>, <code>method</code>, <code>status_code</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dxgate_http_route_requests_total</code></td>
+<td>counter</td>
+</tr>
+<tr>
+<td><code>dxgate_http_route_failures_total</code></td>
+<td>counter</td>
+</tr>
+<tr>
+<td><code>dxgate_http_route_latency_ms</code></td>
+<td>histogram</td>
+</tr>
+</tbody>
+</table>
+<p>Agent traffic is broken down by route and backend, labelled <code>protocol</code>, <code>route</code>, <code>backend</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dxgate_agent_route_requests_total</code></td>
+<td>counter</td>
+</tr>
+<tr>
+<td><code>dxgate_agent_route_failures_total</code></td>
+<td>counter</td>
+</tr>
+<tr>
+<td><code>dxgate_agent_route_latency_ms</code></td>
+<td>histogram</td>
+</tr>
+</tbody>
+</table>
+<p>Point the scrape config at the admin port:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">scrape_configs</span><span class="p">:</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dxgate</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">kubernetes_sd_configs</span><span class="p">:</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pod</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">        </span><span class="nt">namespaces</span><span class="p">:</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">          </span><span class="nt">names</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">dubbo-system</span><span class="p p-Indicator">]</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="nt">relabel_configs</span><span class="p">:</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">__meta_kubernetes_pod_label_app_kubernetes_io_name</span><span class="p p-Indicator">]</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">        </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dxgate</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">        </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">keep</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">__address__</span><span class="p p-Indicator">]</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">        </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="s">'(.+):\d+'</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">        </span><span class="nt">replacement</span><span class="p">:</span><span class="w"> </span><span class="s">'${1}:15021'</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">        </span><span class="nt">target_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__address__</span>
+</span></code></pre></div>
+<h2 id="access-logs">Access logs<a class="headerlink" href="#access-logs" title="Permanent link">&para;</a></h2>
+<p>Access logging is enabled by default and writes to standard output. Managed gateways normally use the <a href="../../tasks/observability/logs/logs/">Telemetry API</a>; the control plane translates it into these environment variables:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Values</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DXGATE_ACCESS_LOG</code></td>
+<td><code>false</code> / <code>0</code> / <code>no</code> / <code>off</code> disable; anything else enables</td>
+<td>enabled</td>
+</tr>
+<tr>
+<td><code>DXGATE_ACCESS_LOG_FORMAT</code></td>
+<td><code>json</code> or <code>text</code></td>
+<td><code>text</code></td>
+</tr>
+<tr>
+<td><code>DXGATE_ACCESS_LOG_MODE</code></td>
+<td><code>SERVER</code>, <code>CLIENT</code>, or <code>CLIENT_AND_SERVER</code></td>
+<td><code>CLIENT_AND_SERVER</code></td>
+</tr>
+<tr>
+<td><code>DXGATE_ACCESS_LOG_FILTER</code></td>
+<td>Access-log filter expression</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>DXGATE_ACCESS_LOG_TAGS</code></td>
+<td>Static-tag JSON object</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>DXGATE_OTEL_LOGS_ENDPOINT</code></td>
+<td>OTLP/gRPC logs endpoint</td>
+<td>Falls back to <code>DXGATE_OTEL_ENDPOINT</code></td>
+</tr>
+</tbody>
+</table>
+<p>The JSON format is one object per line with a fixed set of fields:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">"namespace"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dubbo-system"</span><span class="p">,</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">"gateway"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http-80"</span><span class="p">,</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">"route"</span><span class="p">:</span><span class="w"> </span><span class="s2">"default"</span><span class="p">,</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="nt">"cluster"</span><span class="p">:</span><span class="w"> </span><span class="s2">"example-backend"</span><span class="p">,</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="nt">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GET"</span><span class="p">,</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="nt">"host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"example.com"</span><span class="p">,</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/details"</span><span class="p">,</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span><span class="nt">"status_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">  </span><span class="nt">"latency_ms"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">  </span><span class="nt">"upstream"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.1.2.3:8080"</span><span class="p">,</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">  </span><span class="nt">"trace_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4bf92f3577b34da6a3ce929d0e0e4736"</span><span class="p">,</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">  </span><span class="nt">"span_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00f067aa0ba902b7"</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><code>trace_id</code> and <code>span_id</code> come from the same context as the traces below, so a log line leads straight to its trace. With the <code>otel</code> provider, the same request is also exported as an OTLP LogRecord containing these request fields and the static Telemetry tags.</p>
+<h2 id="tracing">Tracing<a class="headerlink" href="#tracing" title="Permanent link">&para;</a></h2>
+<p>The gateway propagates <code>traceparent</code> per W3C Trace Context: it continues an incoming context or starts a new one. Setting an OTLP endpoint turns on export:</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Variable</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--otel-endpoint</code></td>
+<td><code>DXGATE_OTEL_ENDPOINT</code></td>
+<td>None; no export</td>
+</tr>
+<tr>
+<td><code>--otel-service-name</code></td>
+<td><code>DXGATE_OTEL_SERVICE_NAME</code></td>
+<td><code>dxgate</code></td>
+</tr>
+<tr>
+<td><code>--otel-sampling-percentage</code></td>
+<td><code>DXGATE_OTEL_SAMPLING_PERCENTAGE</code></td>
+<td><code>100</code></td>
+</tr>
+<tr>
+<td><code>--otel-tags</code></td>
+<td><code>DXGATE_OTEL_TAGS</code></td>
+<td>None, a JSON object</td>
+</tr>
+</tbody>
+</table>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">env</span><span class="p">:</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DXGATE_OTEL_ENDPOINT</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://otel-collector.observability.svc:4317</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DXGATE_OTEL_SAMPLING_PERCENTAGE</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"10"</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DXGATE_OTEL_TAGS</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">'{"cluster":"prod","region":"cn-hangzhou"}'</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DXGATE_ACCESS_LOG_FORMAT</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">json</span>
+</span></code></pre></div>
+<p><code>--otel-tags</code> takes a JSON object and attaches its entries as resource attributes on every exported span. In production, lower the sampling rate and switch logs to <code>json</code> for your collector.</p>
+<p>Set these in the Deployment when installing.</p>
+<h2 id="quota-management-quota-windows-timeline">Quota Management &amp; Quota Windows Timeline<a class="headerlink" href="#quota-management-quota-windows-timeline" title="Permanent link">&para;</a></h2>
+<p>For the three distinct compute pool architectures, dxgate provides a <strong>three-track quota ledger engine</strong> and <strong>Quota Windows Timeline Gantt Chart</strong>:</p>
+<h3 id="1-three-track-compute-pool-quota-views">1. Three-Track Compute Pool Quota Views<a class="headerlink" href="#1-three-track-compute-pool-quota-views" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Compute Pool Type</th>
+<th style="text-align: left;">Core Metric</th>
+<th style="text-align: left;">Observability Representation</th>
+<th style="text-align: left;">Protection &amp; Failover Rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Self-Hosted Compute (<code>self-hosted</code>)</strong></td>
+<td style="text-align: left;"><strong>GPU Concurrency</strong> &amp; <strong>Queue Latency</strong></td>
+<td style="text-align: left;"><strong>Concurrency Gauge &amp; Queue Depth</strong><br/>e.g., <code>38 / 64 Concurrency (59.4%)</code>, P95 <code>42ms</code></td>
+<td style="text-align: left;">Triggers <code>onQueueFull</code> overflow to Tier 2 when hardware is saturated.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Subscription Pool (<code>subscription</code>)</strong></td>
+<td style="text-align: left;"><strong>Credits / Periodic %</strong> &amp; <strong>Reset Timestamp</strong></td>
+<td style="text-align: left;"><strong>Quota Progress Bar + Timeline Gantt</strong><br/>e.g., <code>1% · 09/21 Reset</code>, 30d / 5h rolling bar</td>
+<td style="text-align: left;">Automatic cooldown on 429/depletion with seamless rotation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Cloud API Pool (<code>api-key</code>)</strong></td>
+<td style="text-align: left;"><strong>Real-time Cost (USD)</strong> &amp; <strong>RPM/TPM Limits</strong></td>
+<td style="text-align: left;"><strong>Real-time USD Ledger + Rate Watermark</strong><br/>e.g., <code>$23.85 used today</code>, <code>3,000 / 250,000 TPM</code></td>
+<td style="text-align: left;">Exact token cost tracking with circuit-breaking on budget exhaustion.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-quota-windows-timeline">2. Quota Windows Timeline<a class="headerlink" href="#2-quota-windows-timeline" title="Permanent link">&para;</a></h3>
+<p>The UI timeline supports <strong>Weekly</strong> and <strong>5-Hour Rolling Window</strong> views, allowing teams to visualize staggered reset schedules and prevent simultaneous rate-limiting across pooled accounts.</p>
+          
+        </article>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+
+<footer class="md-footer">
+  <div class="md-footer-meta">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">Copyright © 2026 The Apache Kdubbo Team.</div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="../../../assets/kd-theme.js?v=20260726-r2"></script>
+<script src="../../../assets/custom.js?v=20260726-r2"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+<script src="../../../assets/mermaid-init.js?v=20260809-responsive-r1"></script>
+<script src="../../../search/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh" data-md-color-scheme="default">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>运维 - Apache Dubbo Inherent Mesh</title>
+  <link rel="canonical" href="https://kdubbo.github.io/operation/">
+  <link rel="icon" href="../assets/static/logo.ico">
+  <meta name="generator" content="mkdocs-1.6.1">
+  <link rel="stylesheet" href="../assets/kd-theme.css?v=20260820-r2">
+  <link rel="stylesheet" href="../assets/custom.css?v=20260809-responsive-r1">
+  <script id="__config" type="application/json">{"base": "..", "lang": "zh"}</script>
+  
+</head>
+<body dir="ltr">
+
+<aside class="kd-build-notice" role="status" aria-label="文档状态">
+  <span>
+    文档当前处于建设阶段，所有内容均不可用，新版本即将推出。
+  </span>
+</aside>
+
+<input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+<input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+<label class="md-overlay" for="__drawer"></label>
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Apache Dubbo Inherent Mesh">
+    <a href=".." class="md-header__button md-logo" aria-label="Apache Dubbo Inherent Mesh">
+      <img src="../assets/static/logo.png" alt="logo">
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="菜单">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title">
+      <div class="md-header__ellipsis">
+        <span class="md-header__topic">Apache Dubbo Inherent Mesh</span>
+      </div>
+    </div>
+    <div class="md-header__spacer"></div><div class="md-search" role="search">
+      <div class="md-search__inner">
+        <form class="md-search__form" autocomplete="off" onsubmit="return false">
+          <input type="search" class="md-search__input" name="query" aria-label="搜索"
+                 placeholder="搜索" autocapitalize="off" autocorrect="off" spellcheck="false">
+          <label class="md-search__icon md-icon" for="__search" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+          </label>
+        </form>
+        <div class="md-search__output">
+          <div class="md-search__scrollwrap">
+            <div class="md-search-result">
+              <ol class="md-search-result__list" role="presentation"></ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+
+<div class="md-container" data-md-component="container">
+  <main class="md-main" data-md-component="main">
+    <div class="md-main__inner md-grid">
+      <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+        <div class="md-sidebar__scrollwrap">
+          <div class="md-sidebar__inner">
+            <nav class="md-nav md-nav--primary" aria-label="导航">
+              <ul class="md-nav__list" data-md-scrollfix>
+                
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">首页</a>
+    </li>
+                
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n2">
+      <div class="md-nav__container">
+        <a href="../overview/" class="md-nav__link">概述</a>
+        <label class="md-nav__link md-nav__chevron" for="__nav-n2" aria-label="概述"><span class="md-nav__icon md-icon"></span></label>
+      </div>
+      <nav class="md-nav" aria-label="概述">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n2-2">
+      <label class="md-nav__link" for="__nav-n2-2">基本概念<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="基本概念">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../concepts/traffic-management/" class="md-nav__link">流量管理</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../concepts/security/" class="md-nav__link">安全</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../concepts/observability/" class="md-nav__link">可观测性</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../concepts/extensibility/" class="md-nav__link">可扩展性</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../concepts/scalability/" class="md-nav__link">可伸缩性</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+        </ul>
+      </nav>
+    </li>
+                
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n3">
+      <label class="md-nav__link" for="__nav-n3">安装<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="安装">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../setup/install/dubboctl/" class="md-nav__link">Dubboctl</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../setup/install/helm/" class="md-nav__link">Helm</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../setup/install/multicluster/" class="md-nav__link">多集群</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+                
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4">
+      <label class="md-nav__link" for="__nav-n4">任务<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="任务">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-1">
+      <label class="md-nav__link" for="__nav-n4-1">流量管理<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="流量管理">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../tasks/traffic/routing/routing/" class="md-nav__link">流量路由</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../tasks/traffic/canary/canary/" class="md-nav__link">流量转移</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../tasks/traffic/request-timeouts/request-timeouts/" class="md-nav__link">请求超时</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../tasks/traffic/request-retries/request-retries/" class="md-nav__link">请求重试</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../tasks/traffic/fault-injection/fault-injection/" class="md-nav__link">故障注入</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../tasks/traffic/circuit-breaking/circuit-breaking/" class="md-nav__link">熔断</a>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-1-7">
+      <label class="md-nav__link" for="__nav-n4-1-7">网关<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="网关">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../tasks/traffic/ingress/gateway-api/" class="md-nav__link">Ingress</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../tasks/traffic/egress/egress/" class="md-nav__link">Egress</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+        </ul>
+      </nav>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-2">
+      <label class="md-nav__link" for="__nav-n4-2">安全<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="安全">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../tasks/security/mtls/" class="md-nav__link">mTLS</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../tasks/security/jwt/" class="md-nav__link">JWT 认证与授权</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-3">
+      <label class="md-nav__link" for="__nav-n4-3">可观测性<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="可观测性">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../tasks/observability/metrics/metrics/" class="md-nav__link">指标</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../tasks/observability/logs/logs/" class="md-nav__link">日志</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-4">
+      <label class="md-nav__link" for="__nav-n4-4">可扩展性<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="可扩展性">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../tasks/extensibility/service-entry/" class="md-nav__link">网格服务</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../tasks/extensibility/virtual-machines/" class="md-nav__link">非网格服务</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-5">
+      <label class="md-nav__link" for="__nav-n4-5">可伸缩性<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="可伸缩性">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../tasks/scalability/activation/" class="md-nav__link">按需激活</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+        </ul>
+      </nav>
+    </li>
+                
+    <li class="md-nav__item">
+      <a href="../example/moviereview/" class="md-nav__link">示例</a>
+    </li>
+                
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n6">
+      <label class="md-nav__link" for="__nav-n6">参考<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="参考">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../reference/application-standard-metrics/" class="md-nav__link">应用程序标准指标</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../dxgate/cost-control/" class="md-nav__link">dxgate 成本控制</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+                
+    <li class="md-nav__item md-nav__item--active">
+      <a href="./" class="md-nav__link" aria-current="page">运维</a>
+    </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+        <div class="md-sidebar__scrollwrap">
+          <div class="md-sidebar__inner">
+            <nav class="md-nav md-nav--secondary" aria-label="目录">
+              <span class="md-nav__title">本页目录</span>
+              <ul class="md-nav__list">
+                
+  <li class="md-nav__item">
+    <a href="#workloads" class="md-nav__link">查看工作负载</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#validate" class="md-nav__link">校验安装配置</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#analyze" class="md-nav__link">分析集群配置</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#xds-status" class="md-nav__link">检查 xDS 同步</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#debug" class="md-nav__link">深入排障</a>
+  </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="md-content" data-md-component="content">
+        <article class="md-content__inner md-typeset">
+          
+          <h1 id="_1">运维与排障<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>按“工作负载、配置、xDS”顺序检查网格。日常操作优先使用 <code>dubboctl</code>，需要原始控制面数据时再访问 dubbod Debug 端点。</p>
+<h2 id="workloads">查看工作负载<a class="headerlink" href="#workloads" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># 查看全部已注入的 Pod</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>dubboctl<span class="w"> </span>get<span class="w"> </span>pods
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># 只查看指定命名空间</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>dubboctl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>backend
+</span></code></pre></div>
+<p>输出包含就绪状态、重启次数、节点和注入模板，可先定位未就绪、频繁重启或节点分布异常的工作负载。</p>
+<h2 id="validate">校验安装配置<a class="headerlink" href="#validate" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>dubboctl<span class="w"> </span>validate<span class="w"> </span>-f<span class="w"> </span>dubbo-operator.yaml
+</span></code></pre></div>
+<p><code>validate</code> 当前校验 <code>install.dubbo.apache.org/v1alpha1</code> 的 <code>DubboOperator</code> 安装配置。网格策略提交后的引用关系和实际生效条件，应使用 <code>dubboctl analyze</code> 检查。</p>
+<h2 id="analyze">分析集群配置<a class="headerlink" href="#analyze" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># 默认命名空间</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>dubboctl<span class="w"> </span>analyze
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># 指定命名空间或全部命名空间</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>dubboctl<span class="w"> </span>analyze<span class="w"> </span>-n<span class="w"> </span>backend
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>dubboctl<span class="w"> </span>analyze<span class="w"> </span>-A
+</span></code></pre></div>
+<p>分析范围包括：</p>
+<ul>
+<li><code>HTTPRoute</code> 和 <code>CircuitBreakerPolicy</code> 引用的 Service 或端口是否存在；</li>
+<li>安全策略 selector 是否匹配 Pod，JWT 是否真正强制，mTLS 是否仍允许明文；</li>
+<li>dubbod 与 dxgate 是否具备多副本、PodDisruptionBudget 和跨节点分布。</li>
+</ul>
+<p>出现 <code>Error</code> 时命令返回非零退出码；<code>Warning</code> 和 <code>Info</code> 需要结合发布计划处理。</p>
+<h2 id="xds-status">检查 xDS 同步<a class="headerlink" href="#xds-status" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>dubboctl<span class="w"> </span>proxy-status
+</span></code></pre></div>
+<p>命令通过 Kubernetes API 汇总所有运行中 dubbod 实例的 CDS、LDS、EDS 和 RDS 状态，无需端口转发。</p>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SYNCED</code></td>
+<td>数据面已确认最近一次推送</td>
+</tr>
+<tr>
+<td><code>STALE</code></td>
+<td>已推送但尚未确认；持续出现时检查控制面和数据面日志</td>
+</tr>
+<tr>
+<td><code>ERROR</code></td>
+<td>最近一次推送失败；查看 <code>/debug/syncz</code> 的 <code>last_error</code></td>
+</tr>
+<tr>
+<td><code>NOT SENT</code> / <code>NOT WATCHED</code></td>
+<td>尚未推送，或数据面未订阅该资源类型</td>
+</tr>
+</tbody>
+</table>
+<h2 id="debug">深入排障<a class="headerlink" href="#debug" title="Permanent link">&para;</a></h2>
+<p>常规命令无法定位问题时，临时访问 dubbod 监控端口：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>dubbo-system<span class="w"> </span>port-forward<span class="w"> </span>deploy/dubbod<span class="w"> </span><span class="m">8080</span>:8080
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:8080/debug<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>端点</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/debug/syncz</code></td>
+<td>已连接数据面的 xDS 同步状态和最近错误</td>
+</tr>
+<tr>
+<td><code>/debug/configz</code></td>
+<td>控制面已加载的配置资源</td>
+</tr>
+<tr>
+<td><code>/debug/registryz</code></td>
+<td>服务注册表</td>
+</tr>
+<tr>
+<td><code>/debug/endpointz</code></td>
+<td>xDS 发布的端点、健康状态和节点位置</td>
+</tr>
+</tbody>
+</table>
+<p>Prometheus 指标的部署和查询方式见<a href="../tasks/observability/metrics/metrics/">指标</a>。</p>
+          
+        </article>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+
+<footer class="md-footer">
+  <nav class="md-footer__inner md-grid" aria-label="页脚">
+    <a href="../dxgate/cost-control/" class="md-footer__link md-footer__link--prev" rel="prev">
+      <div class="md-footer__button md-icon">
+        <svg viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </div>
+      <div class="md-footer__title">
+        <span class="md-footer__direction">上一页</span>
+        <div class="md-ellipsis">dxgate 成本控制</div>
+      </div>
+    </a>
+    <a href="../latest/release/" class="md-footer__link md-footer__link--next" rel="next">
+      <div class="md-footer__title">
+        <span class="md-footer__direction">下一页</span>
+        <div class="md-ellipsis">公告栏</div>
+      </div>
+      <div class="md-footer__button md-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+      </div>
+    </a>
+  </nav>
+  <div class="md-footer-meta">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">Copyright © 2026 The Apache Kdubbo Team.</div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="../assets/kd-theme.js?v=20260726-r2"></script>
+<script src="../assets/custom.js?v=20260726-r2"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+<script src="../assets/mermaid-init.js?v=20260809-responsive-r1"></script>
+<script src="../search/main.js"></script>
+</body>
+</html>

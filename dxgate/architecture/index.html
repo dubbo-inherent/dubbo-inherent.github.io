@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh" data-md-color-scheme="default">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>网关架构 - Apache Dubbo Inherent Mesh</title>
+  <link rel="canonical" href="https://kdubbo.github.io/dxgate/architecture/">
+  <link rel="icon" href="../../assets/static/logo.ico">
+  <meta name="generator" content="mkdocs-1.6.1">
+  <link rel="stylesheet" href="../../assets/kd-theme.css?v=20260820-r2">
+  <link rel="stylesheet" href="../../assets/custom.css?v=20260809-responsive-r1">
+  <script id="__config" type="application/json">{"base": "../..", "lang": "zh"}</script>
+  
+</head>
+<body dir="ltr">
+
+<aside class="kd-build-notice" role="status" aria-label="文档状态">
+  <span>
+    文档当前处于建设阶段，所有内容均不可用，新版本即将推出。
+  </span>
+</aside>
+
+<input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+<input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+<label class="md-overlay" for="__drawer"></label>
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Apache Dubbo Inherent Mesh">
+    <a href="../.." class="md-header__button md-logo" aria-label="Apache Dubbo Inherent Mesh">
+      <img src="../../assets/static/logo.png" alt="logo">
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="菜单">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title">
+      <div class="md-header__ellipsis">
+        <span class="md-header__topic">Apache Dubbo Inherent Mesh</span>
+      </div>
+    </div>
+    <div class="md-header__spacer"></div><div class="md-search" role="search">
+      <div class="md-search__inner">
+        <form class="md-search__form" autocomplete="off" onsubmit="return false">
+          <input type="search" class="md-search__input" name="query" aria-label="搜索"
+                 placeholder="搜索" autocapitalize="off" autocorrect="off" spellcheck="false">
+          <label class="md-search__icon md-icon" for="__search" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+          </label>
+        </form>
+        <div class="md-search__output">
+          <div class="md-search__scrollwrap">
+            <div class="md-search-result">
+              <ol class="md-search-result__list" role="presentation"></ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+
+<div class="md-container" data-md-component="container">
+  <main class="md-main" data-md-component="main">
+    <div class="md-main__inner md-grid">
+      <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+        <div class="md-sidebar__scrollwrap">
+          <div class="md-sidebar__inner">
+            <nav class="md-nav md-nav--primary kd-nav--standalone" aria-label="dxgate">
+              <ul class="md-nav__list" data-md-scrollfix>
+                <li class="md-nav__item md-nav__item--nested md-nav__item--active">
+                  <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-dx1" checked>
+                  <label class="md-nav__link" for="__nav-dx1">概念<span class="md-nav__icon md-icon"></span></label>
+                  <nav class="md-nav" aria-label="概念">
+                    <ul class="md-nav__list">
+                      <li class="md-nav__item">
+                        <a href="../" class="md-nav__link">dxgate 是什么</a>
+                      </li>
+                      <li class="md-nav__item md-nav__item--active">
+                        <a href="./" class="md-nav__link" aria-current="page">网关架构</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </li>
+                <li class="md-nav__item md-nav__item--nested">
+                  <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-dx2">
+                  <label class="md-nav__link" for="__nav-dx2">服务路由<span class="md-nav__icon md-icon"></span></label>
+                  <nav class="md-nav" aria-label="服务路由">
+                    <ul class="md-nav__list">
+                      <li class="md-nav__item">
+                        <a href="../http-service/" class="md-nav__link">普通 Service</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </li>
+                <li class="md-nav__item md-nav__item--nested">
+                  <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-dx3">
+                  <label class="md-nav__link" for="__nav-dx3">LLM<span class="md-nav__icon md-icon"></span></label>
+                  <nav class="md-nav" aria-label="LLM">
+                    <ul class="md-nav__list">
+                      <li class="md-nav__item">
+                        <a href="../llm/" class="md-nav__link">LLM 路由</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </li>
+                <li class="md-nav__item md-nav__item--nested">
+                  <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-dx4">
+                  <label class="md-nav__link" for="__nav-dx4">MCP<span class="md-nav__icon md-icon"></span></label>
+                  <nav class="md-nav" aria-label="MCP">
+                    <ul class="md-nav__list">
+                      <li class="md-nav__item">
+                        <a href="../mcp/" class="md-nav__link">MCP 路由</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </li>
+                <li class="md-nav__item md-nav__item--nested">
+                  <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-dx5">
+                  <label class="md-nav__link" for="__nav-dx5">Agent<span class="md-nav__icon md-icon"></span></label>
+                  <nav class="md-nav" aria-label="Agent">
+                    <ul class="md-nav__list">
+                      <li class="md-nav__item">
+                        <a href="../a2a/" class="md-nav__link">A2A 转发</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+        <div class="md-sidebar__scrollwrap">
+          <div class="md-sidebar__inner">
+            <nav class="md-nav md-nav--secondary" aria-label="目录">
+              <span class="md-nav__title">本页目录</span>
+              <ul class="md-nav__list">
+                
+  <li class="md-nav__item">
+    <a href="#api" class="md-nav__link">API 边界</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#_2" class="md-nav__link">控制面</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#_3" class="md-nav__link">数据面</a>
+  </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="md-content" data-md-component="content">
+        <article class="md-content__inner md-typeset">
+          
+          <h1 id="_1">网关架构<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>dxgate 是数据面，<code>dubbod</code> 是唯一控制面。普通 HTTP 后端与 AI 后端都从 Kubernetes API 进入同一条网格配置链。</p>
+<div class="mermaid">flowchart LR
+  subgraph cp["Control plane (external)"]
+    direction TB
+    dubbod["dubbod&lt;br/&gt;Gateway API resources"]
+  end
+
+  subgraph kube["Kubernetes API"]
+    direction TB
+    crd["DxgateService"]
+  end
+
+  subgraph dp["Data plane (dxgate)"]
+    direction TB
+    xds["xDS client"]
+    informer["CRD controller"]
+    store["ConfigStore&lt;br/&gt;ownership · deltas · visible conflicts"]
+    proxy["proxy&lt;br/&gt;snapshot → routing → policies"]
+  end
+
+  clients["Clients"]
+  targets["Services,&lt;br/&gt;LLM providers,&lt;br/&gt;MCP and A2A targets"]
+
+  dubbod -- "streaming xDS&lt;br/&gt;(delta updates)" --&gt; xds
+  crd -- "watch" --&gt; informer
+  informer -- "status" --&gt; crd
+  xds -- "listeners · clusters" --&gt; store
+  informer -- "providers · backends&lt;br/&gt;routes · policies" --&gt; store
+  store -- "immutable snapshot" --&gt; proxy
+  clients -- "requests" --&gt; proxy
+  proxy -- "routes to" --&gt; targets
+
+  classDef ext fill:#FFFFFF,stroke:#636F80,stroke-width:1.2px,color:#1A2332;
+  classDef core fill:#FFFFFF,stroke:#1D5BC4,stroke-width:1.5px,color:#1A2332;
+  class dubbod,crd,clients,targets ext;
+  class xds,informer,store,proxy core;</div>
+<h2 id="api">API 边界<a class="headerlink" href="#api" title="Permanent link">&para;</a></h2>
+<ul>
+<li>普通 HTTP、gRPC、Dubbo Triple 后端继续使用核心 Kubernetes <code>Service</code>。</li>
+<li>OpenAI、Anthropic、MCP、A2A 后端统一使用
+  <code>networking.dubbo.apache.org/v1alpha3</code> <code>DxgateService</code>。</li>
+<li>两类后端都由 Gateway API <code>HTTPRoute.backendRefs</code> 引用。</li>
+<li><code>Dxgate</code>、<code>DxgateBackend</code>、<code>DxgateRoute</code>、<code>DxgatePolicy</code> 不再存在于运行链路。</li>
+</ul>
+<h2 id="_2">控制面<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p><code>dubbod</code> watch <code>Gateway</code>、<code>HTTPRoute</code>、<code>Service</code> 与 <code>DxgateService</code>，校验类型和引用，把普通路由与智能体路由编译进同一个 RDS <code>RouteConfiguration</code>。<code>DxgateService</code> 更新会触发新的 xDS push；数据面无需重启。</p>
+<p>跨命名空间 <code>DxgateService</code> 引用目前拒绝。凭据引用也固定在 <code>DxgateService</code> 所在命名空间，避免给数据面集群级 Secret 权限。</p>
+<h2 id="_3">数据面<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>dxgate 只消费 <code>dubbod</code> 的 xDS。它不 watch 独立路由 CRD，也不在数据面合并两套配置。唯一的 Kubernetes 访问是读取 RDS 已引用的同命名空间 Secret 值；ServiceAccount 只有 <code>secrets/get</code>。</p>
+<p>RDS 更新会生成一份不可变运行时快照。普通 HTTP/gRPC 直接按 listener、virtual host、cluster 转发；LLM、MCP、A2A 会解析协议字段，再执行认证、限流、Token 预算、超时、重试和请求头变换。</p>
+<p>dxgate 通过同一 ADS 连接订阅 SDS <code>default</code> 与 <code>ROOTCA</code>。证书通过校验后才进入不可变快照并 ACK；无效轮换会 NACK，并保留最后有效证书继续服务。SDS 私钥不会出现在 <code>/debug/config</code>。</p>
+<p>完整资源写法见<a href="../service/">统一 DxgateService API</a>。</p>
+          
+        </article>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+
+<footer class="md-footer">
+  <div class="md-footer-meta">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">Copyright © 2026 The Apache Kdubbo Team.</div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="../../assets/kd-theme.js?v=20260726-r2"></script>
+<script src="../../assets/custom.js?v=20260726-r2"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+<script src="../../assets/mermaid-init.js?v=20260809-responsive-r1"></script>
+<script src="../../search/main.js"></script>
+</body>
+</html>

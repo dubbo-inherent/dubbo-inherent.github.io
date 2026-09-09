@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" data-md-color-scheme="default">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Security - Apache Dubbo Inherent Mesh</title>
+  <link rel="canonical" href="https://kdubbo.github.io/en/dxgate/security/">
+  <link rel="icon" href="../../../assets/static/logo.ico">
+  <meta name="generator" content="mkdocs-1.6.1">
+  <link rel="stylesheet" href="../../../assets/kd-theme.css?v=20260820-r2">
+  <link rel="stylesheet" href="../../../assets/custom.css?v=20260809-responsive-r1">
+  <script id="__config" type="application/json">{"base": "../..", "lang": "en"}</script>
+  
+</head>
+<body dir="ltr">
+
+<aside class="kd-build-notice" role="status" aria-label="Documentation status">
+  <span>
+    Documentation is under construction. All content is currently unavailable. A new version is coming soon.
+  </span>
+</aside>
+
+<input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+<input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+<label class="md-overlay" for="__drawer"></label>
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Apache Dubbo Inherent Mesh">
+    <a href="../../" class="md-header__button md-logo" aria-label="Apache Dubbo Inherent Mesh">
+      <img src="../../../assets/static/logo.png" alt="logo">
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="Menu">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title">
+      <div class="md-header__ellipsis">
+        <span class="md-header__topic">Apache Dubbo Inherent Mesh</span>
+      </div>
+    </div>
+    <div class="md-header__spacer"></div><div class="md-search" role="search">
+      <div class="md-search__inner">
+        <form class="md-search__form" autocomplete="off" onsubmit="return false">
+          <input type="search" class="md-search__input" name="query" aria-label="Search"
+                 placeholder="Search" autocapitalize="off" autocorrect="off" spellcheck="false">
+          <label class="md-search__icon md-icon" for="__search" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+          </label>
+        </form>
+        <div class="md-search__output">
+          <div class="md-search__scrollwrap">
+            <div class="md-search-result">
+              <ol class="md-search-result__list" role="presentation"></ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+
+<div class="md-container" data-md-component="container">
+  <main class="md-main" data-md-component="main">
+    <div class="md-main__inner md-grid">
+      <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+        <div class="md-sidebar__scrollwrap">
+          <div class="md-sidebar__inner">
+            <nav class="md-nav md-nav--primary kd-nav--standalone" aria-label="dxgate">
+              <ul class="md-nav__list" data-md-scrollfix>
+                <li class="md-nav__item md-nav__item--nested">
+                  <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-dx1">
+                  <label class="md-nav__link" for="__nav-dx1">Concepts<span class="md-nav__icon md-icon"></span></label>
+                  <nav class="md-nav" aria-label="Concepts">
+                    <ul class="md-nav__list">
+                      <li class="md-nav__item">
+                        <a href="../" class="md-nav__link">What is dxgate</a>
+                      </li>
+                      <li class="md-nav__item">
+                        <a href="../architecture/" class="md-nav__link">Architecture</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </li>
+                <li class="md-nav__item md-nav__item--nested">
+                  <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-dx2">
+                  <label class="md-nav__link" for="__nav-dx2">Service routing<span class="md-nav__icon md-icon"></span></label>
+                  <nav class="md-nav" aria-label="Service routing">
+                    <ul class="md-nav__list">
+                      <li class="md-nav__item">
+                        <a href="../http-service/" class="md-nav__link">Ordinary Service</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </li>
+                <li class="md-nav__item md-nav__item--nested">
+                  <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-dx3">
+                  <label class="md-nav__link" for="__nav-dx3">LLM<span class="md-nav__icon md-icon"></span></label>
+                  <nav class="md-nav" aria-label="LLM">
+                    <ul class="md-nav__list">
+                      <li class="md-nav__item">
+                        <a href="../llm/" class="md-nav__link">LLM routing</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </li>
+                <li class="md-nav__item md-nav__item--nested">
+                  <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-dx4">
+                  <label class="md-nav__link" for="__nav-dx4">MCP<span class="md-nav__icon md-icon"></span></label>
+                  <nav class="md-nav" aria-label="MCP">
+                    <ul class="md-nav__list">
+                      <li class="md-nav__item">
+                        <a href="../mcp/" class="md-nav__link">MCP routing</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </li>
+                <li class="md-nav__item md-nav__item--nested">
+                  <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-dx5">
+                  <label class="md-nav__link" for="__nav-dx5">Agent<span class="md-nav__icon md-icon"></span></label>
+                  <nav class="md-nav" aria-label="Agent">
+                    <ul class="md-nav__list">
+                      <li class="md-nav__item">
+                        <a href="../a2a/" class="md-nav__link">A2A forwarding</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+        <div class="md-sidebar__scrollwrap">
+          <div class="md-sidebar__inner">
+            <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+              <span class="md-nav__title">On this page</span>
+              <ul class="md-nav__list">
+                
+  <li class="md-nav__item">
+    <a href="#client-authentication" class="md-nav__link">Client authentication</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#provider-credentials" class="md-nav__link">Provider credentials</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#auth-files-management-credentials-vault" class="md-nav__link">Auth Files Management (Credentials Vault)</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#policies" class="md-nav__link">Policies</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#transport-and-container" class="md-nav__link">Transport and container</a>
+  </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="md-content" data-md-component="content">
+        <article class="md-content__inner md-typeset">
+          
+          <h1 id="security">Security<a class="headerlink" href="#security" title="Permanent link">&para;</a></h1>
+<h2 id="client-authentication">Client authentication<a class="headerlink" href="#client-authentication" title="Permanent link">&para;</a></h2>
+<p>Authentication is declared directly in <code>DxgateService.spec.policies</code>; there is no separate Policy CRD:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">policies</span><span class="p">:</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">auth</span><span class="p">:</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">      </span><span class="nt">header</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">x-client-key</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">      </span><span class="nt">secretRef</span><span class="p">:</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">client-credentials</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api-key</span>
+</span></code></pre></div>
+<p>The request header must exactly match the Secret value. A failure returns <code>401</code> and increments <code>dxgate_policy_denied_total</code>.</p>
+<h2 id="provider-credentials">Provider credentials<a class="headerlink" href="#provider-credentials" title="Permanent link">&para;</a></h2>
+<p>LLM credentials are also same-namespace Secret references:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">ai</span><span class="p">:</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">provider</span><span class="p">:</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">      </span><span class="nt">openai</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">      </span><span class="nt">credential</span><span class="p">:</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">provider-credentials</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">        </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api-key</span>
+</span></code></pre></div>
+<p>The Secret value never enters the Kubernetes CRD, RDS, or <code>/debug/config</code>. <code>dubbod</code> sends only <code>{namespace,name,key}</code>; dxgate reads the value with the gateway ServiceAccount and keeps it in memory. A managed gateway gets only same-namespace <code>secrets/get</code>, and cross-namespace references are rejected.</p>
+<h2 id="auth-files-management-credentials-vault">Auth Files Management (Credentials Vault)<a class="headerlink" href="#auth-files-management-credentials-vault" title="Permanent link">&para;</a></h2>
+<p>For subscription tokens (ChatGPT / Claude / Codex OAuth token files) and API Key credentials, dxgate provides a dedicated credentials management console:</p>
+<ul>
+<li><strong>Provider Filter Tabs</strong>: Filter by Codex, Claude, Antigravity, xAI, Kimi, and OpenAI;</li>
+<li><strong>20-Block Health Bar</strong>: Tracks the last 20 request probes (success/failure) for instant health visibility;</li>
+<li><strong>Diagnostic Banners</strong>: Automatically highlights <code>unauthorized</code> or 429 Cooldown states with quick token refresh triggers;</li>
+<li><strong>Full Credential Lifecycle</strong>: Supports model aliasing, dynamic token refresh, encrypted export, and enable/disable toggles.</li>
+</ul>
+<h2 id="policies">Policies<a class="headerlink" href="#policies" title="Permanent link">&para;</a></h2>
+<p>One <code>policies</code> block applies to every HTTPRoute that references the <code>DxgateService</code>. It supports:</p>
+<ul>
+<li>API-key authentication;</li>
+<li>request-rate and LLM token budgets;</li>
+<li>timeout, retry, and maximum body size;</li>
+<li>request and response header transforms.</li>
+</ul>
+<p><code>dubbod</code> validates policy at admission and compile time; the data plane consumes only the compiled result.</p>
+<h2 id="transport-and-container">Transport and container<a class="headerlink" href="#transport-and-container" title="Permanent link">&para;</a></h2>
+<ul>
+<li>A managed Gateway can use Dubbo mutual TLS to in-mesh Services.</li>
+<li>dxgate runs as UID/GID <code>65532</code>, with a read-only root filesystem and no capabilities.</li>
+<li>The business Service does not expose the admin port, and <code>/debug/*</code> never returns Secret values.</li>
+<li>xDS is the only routing configuration source; the data plane watches no private CRDs.</li>
+</ul>
+          
+        </article>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+
+<footer class="md-footer">
+  <div class="md-footer-meta">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">Copyright © 2026 The Apache Kdubbo Team.</div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="../../../assets/kd-theme.js?v=20260726-r2"></script>
+<script src="../../../assets/custom.js?v=20260726-r2"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+<script src="../../../assets/mermaid-init.js?v=20260809-responsive-r1"></script>
+<script src="../../../search/main.js"></script>
+</body>
+</html>

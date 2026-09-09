@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh" data-md-color-scheme="default">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>mTLS - Apache Dubbo Inherent Mesh</title>
+  <link rel="canonical" href="https://kdubbo.github.io/tasks/security/mtls/">
+  <link rel="icon" href="../../../assets/static/logo.ico">
+  <meta name="generator" content="mkdocs-1.6.1">
+  <link rel="stylesheet" href="../../../assets/kd-theme.css?v=20260820-r2">
+  <link rel="stylesheet" href="../../../assets/custom.css?v=20260809-responsive-r1">
+  <script id="__config" type="application/json">{"base": "../../..", "lang": "zh"}</script>
+  
+</head>
+<body dir="ltr">
+
+<aside class="kd-build-notice" role="status" aria-label="文档状态">
+  <span>
+    文档当前处于建设阶段，所有内容均不可用，新版本即将推出。
+  </span>
+</aside>
+
+<input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+<input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+<label class="md-overlay" for="__drawer"></label>
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Apache Dubbo Inherent Mesh">
+    <a href="../../.." class="md-header__button md-logo" aria-label="Apache Dubbo Inherent Mesh">
+      <img src="../../../assets/static/logo.png" alt="logo">
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="菜单">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title">
+      <div class="md-header__ellipsis">
+        <span class="md-header__topic">Apache Dubbo Inherent Mesh</span>
+      </div>
+    </div>
+    <div class="md-header__spacer"></div><div class="md-search" role="search">
+      <div class="md-search__inner">
+        <form class="md-search__form" autocomplete="off" onsubmit="return false">
+          <input type="search" class="md-search__input" name="query" aria-label="搜索"
+                 placeholder="搜索" autocapitalize="off" autocorrect="off" spellcheck="false">
+          <label class="md-search__icon md-icon" for="__search" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+          </label>
+        </form>
+        <div class="md-search__output">
+          <div class="md-search__scrollwrap">
+            <div class="md-search-result">
+              <ol class="md-search-result__list" role="presentation"></ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+
+<div class="md-container" data-md-component="container">
+  <main class="md-main" data-md-component="main">
+    <div class="md-main__inner md-grid">
+      <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+        <div class="md-sidebar__scrollwrap">
+          <div class="md-sidebar__inner">
+            <nav class="md-nav md-nav--primary" aria-label="导航">
+              <ul class="md-nav__list" data-md-scrollfix>
+                
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">首页</a>
+    </li>
+                
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n2">
+      <div class="md-nav__container">
+        <a href="../../../overview/" class="md-nav__link">概述</a>
+        <label class="md-nav__link md-nav__chevron" for="__nav-n2" aria-label="概述"><span class="md-nav__icon md-icon"></span></label>
+      </div>
+      <nav class="md-nav" aria-label="概述">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n2-2">
+      <label class="md-nav__link" for="__nav-n2-2">基本概念<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="基本概念">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../../concepts/traffic-management/" class="md-nav__link">流量管理</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../concepts/security/" class="md-nav__link">安全</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../concepts/observability/" class="md-nav__link">可观测性</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../concepts/extensibility/" class="md-nav__link">可扩展性</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../concepts/scalability/" class="md-nav__link">可伸缩性</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+        </ul>
+      </nav>
+    </li>
+                
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n3">
+      <label class="md-nav__link" for="__nav-n3">安装<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="安装">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../../setup/install/dubboctl/" class="md-nav__link">Dubboctl</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../setup/install/helm/" class="md-nav__link">Helm</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../setup/install/multicluster/" class="md-nav__link">多集群</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+                
+    <li class="md-nav__item md-nav__item--nested md-nav__item--active">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4" checked>
+      <label class="md-nav__link" for="__nav-n4">任务<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="任务">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-1">
+      <label class="md-nav__link" for="__nav-n4-1">流量管理<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="流量管理">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../traffic/routing/routing/" class="md-nav__link">流量路由</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../traffic/canary/canary/" class="md-nav__link">流量转移</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../traffic/request-timeouts/request-timeouts/" class="md-nav__link">请求超时</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../traffic/request-retries/request-retries/" class="md-nav__link">请求重试</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../traffic/fault-injection/fault-injection/" class="md-nav__link">故障注入</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../traffic/circuit-breaking/circuit-breaking/" class="md-nav__link">熔断</a>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-1-7">
+      <label class="md-nav__link" for="__nav-n4-1-7">网关<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="网关">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../traffic/ingress/gateway-api/" class="md-nav__link">Ingress</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../traffic/egress/egress/" class="md-nav__link">Egress</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+        </ul>
+      </nav>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested md-nav__item--active">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-2" checked>
+      <label class="md-nav__link" for="__nav-n4-2">安全<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="安全">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item md-nav__item--active">
+      <a href="./" class="md-nav__link" aria-current="page">mTLS</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../jwt/" class="md-nav__link">JWT 认证与授权</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-3">
+      <label class="md-nav__link" for="__nav-n4-3">可观测性<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="可观测性">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../observability/metrics/metrics/" class="md-nav__link">指标</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../observability/logs/logs/" class="md-nav__link">日志</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-4">
+      <label class="md-nav__link" for="__nav-n4-4">可扩展性<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="可扩展性">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../extensibility/service-entry/" class="md-nav__link">网格服务</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../extensibility/virtual-machines/" class="md-nav__link">非网格服务</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-5">
+      <label class="md-nav__link" for="__nav-n4-5">可伸缩性<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="可伸缩性">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../scalability/activation/" class="md-nav__link">按需激活</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+        </ul>
+      </nav>
+    </li>
+                
+    <li class="md-nav__item">
+      <a href="../../../example/moviereview/" class="md-nav__link">示例</a>
+    </li>
+                
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n6">
+      <label class="md-nav__link" for="__nav-n6">参考<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="参考">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../../reference/application-standard-metrics/" class="md-nav__link">应用程序标准指标</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../dxgate/cost-control/" class="md-nav__link">dxgate 成本控制</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+                
+    <li class="md-nav__item">
+      <a href="../../../operation/" class="md-nav__link">运维</a>
+    </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+        <div class="md-sidebar__scrollwrap">
+          <div class="md-sidebar__inner">
+            <nav class="md-nav md-nav--secondary" aria-label="目录">
+              <span class="md-nav__title">本页目录</span>
+              <ul class="md-nav__list">
+                
+  <li class="md-nav__item">
+    <a href="#_1" class="md-nav__link">前提条件</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#_2" class="md-nav__link">启用宽容模式</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#_3" class="md-nav__link">验证宽容模式</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#_4" class="md-nav__link">收紧为严格模式</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#_5" class="md-nav__link">限制调用方身份</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#mtls" class="md-nav__link">启用全局自动 mTLS</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#_6" class="md-nav__link">清理</a>
+  </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="md-content" data-md-component="content">
+        <article class="md-content__inner md-typeset">
+          
+          <p>本任务使用支持 gRPC xDS server security 的应用验证 Dubbo mTLS。mTLS 是 Mutual TLS，表示客户端和服务端使用证书互相校验身份。Inherent 模式不注入 <code>grpc-inbound</code> sidecar；应用运行时直接加载 LDS/CDS 和挂载证书。</p>
+<h2 id="_1">前提条件<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>kubectl<span class="w"> </span>create<span class="w"> </span>ns<span class="w"> </span>app
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>kubectl<span class="w"> </span>label<span class="w"> </span>namespace<span class="w"> </span>app<span class="w"> </span>dubbo-injection<span class="o">=</span>enabled
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>samples/app/deployment.yaml
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>samples/app/httproute.yaml
+</span></code></pre></div>
+<h2 id="_2">启用宽容模式<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p><code>PERMISSIVE</code> 同时接受明文和 mTLS 流量，适合先接入网格再逐步收紧。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="s">apiVersion: security.dubbo.apache.org/v1alpha3</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="s">kind: PeerAuthentication</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="s">metadata:</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="s">  name: app-permissive-mtls</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="s">  namespace: app</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="s">spec:</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="s">  mtls:</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="s">    mode: PERMISSIVE</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="s">EOF</span>
+</span></code></pre></div>
+<h2 id="_3">验证宽容模式<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>确认 mTLS 请求可以进入服务：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>app<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>deploy/nginx-consumer<span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span>dubbod<span class="w"> </span>grpc-outbound<span class="w"> </span>--print-route<span class="w"> </span>--expect<span class="w"> </span>nginx-v1<span class="o">=</span><span class="m">50</span>,nginx-v2<span class="o">=</span><span class="m">50</span>
+</span></code></pre></div>
+<p>关键字段：</p>
+<ul>
+<li><code>services[].ports[].mtlsMode: PERMISSIVE</code></li>
+</ul>
+<p>确认明文请求也可以进入服务：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>app<span class="w"> </span>run<span class="w"> </span>plain-curl<span class="w"> </span>--rm<span class="w"> </span>-i<span class="w"> </span>--restart<span class="o">=</span>Never<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span>--image<span class="o">=</span>curlimages/curl:8.5.0<span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span>curl<span class="w"> </span>-s<span class="w"> </span>http://nginx.app.svc.cluster.local/
+</span></code></pre></div>
+<p>预期返回：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>nginx v1
+</span></code></pre></div>
+<p>或：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>nginx v2
+</span></code></pre></div>
+<h2 id="_4">收紧为严格模式<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p><code>STRICT</code> 只接受 mTLS 流量。未接入网格的明文请求会被拒绝。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>app<span class="w"> </span>patch<span class="w"> </span>peerauthentication<span class="w"> </span>app-permissive-mtls<span class="w"> </span>--type<span class="o">=</span><span class="s1">'merge'</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span>-p<span class="o">=</span><span class="s1">'{"spec":{"mtls":{"mode":"STRICT"}}}'</span>
+</span></code></pre></div>
+<p>确认 mTLS 请求仍然成功：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>app<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>deploy/nginx-consumer<span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span>dubbod<span class="w"> </span>grpc-outbound<span class="w"> </span>--expect<span class="w"> </span>nginx-v1<span class="o">=</span><span class="m">50</span>,nginx-v2<span class="o">=</span><span class="m">50</span><span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>-c
+</span></code></pre></div>
+<p>确认明文请求不能绕过 mTLS：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>app<span class="w"> </span>run<span class="w"> </span>plain-curl<span class="w"> </span>--rm<span class="w"> </span>-i<span class="w"> </span>--restart<span class="o">=</span>Never<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span>--image<span class="o">=</span>curlimages/curl:8.5.0<span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span>curl<span class="w"> </span>-sv<span class="w"> </span>--max-time<span class="w"> </span><span class="m">5</span><span class="w"> </span>http://nginx.app.svc.cluster.local/
+</span></code></pre></div>
+<p>预期不是正常 <code>200 OK</code>。</p>
+<h2 id="_5">限制调用方身份<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p><code>STRICT</code> 证明连接持有网格证书；<code>AuthorizationPolicy</code> 继续限制允许访问的 SPIFFE 身份。示例中的 consumer 使用 <code>app/nginx</code> ServiceAccount：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="s">apiVersion: security.dubbo.apache.org/v1alpha3</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="s">kind: AuthorizationPolicy</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="s">metadata:</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="s">  name: nginx-allow-client</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="s">  namespace: app</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="s">spec:</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="s">  selector:</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="s">    matchLabels:</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="s">      app: nginx</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="s">  action: ALLOW</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="s">  rules:</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="s">  - from:</span>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="s">    - source:</span>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="s">        principals:</span>
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="s">        - cluster.local/ns/app/sa/nginx</span>
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="s">EOF</span>
+</span></code></pre></div>
+<p>确认允许的 mTLS 身份仍能访问：</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>app<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>deploy/nginx-consumer<span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span>dubbod<span class="w"> </span>grpc-outbound<span class="w"> </span>--expect<span class="w"> </span>nginx-v1<span class="o">=</span><span class="m">50</span>,nginx-v2<span class="o">=</span><span class="m">50</span><span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>-c
+</span></code></pre></div>
+<p>原生 gRPC xDS server 从经过 CA 验证的客户端证书 URI SAN 提取身份，不信任调用方自行设置的 HTTP 头。</p>
+<h2 id="mtls">启用全局自动 mTLS<a class="headerlink" href="#mtls" title="Permanent link">&para;</a></h2>
+<p>把 <code>PeerAuthentication</code> 放在 root namespace <code>dubbo-system</code> 且不设置 <code>selector</code>，会作为全局策略应用到整个网格。</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="s">apiVersion: security.dubbo.apache.org/v1alpha3</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="s">kind: PeerAuthentication</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="s">metadata:</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="s">  name: default</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="s">  namespace: dubbo-system</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="s">spec:</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="s">  mtls:</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="s">    mode: STRICT</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="s">EOF</span>
+</span></code></pre></div>
+<p>namespace 级别策略优先于全局策略，适合按 namespace 分阶段迁移。</p>
+<h2 id="_6">清理<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>app<span class="w"> </span>delete<span class="w"> </span>httproute<span class="w"> </span>nginx-routing
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>app<span class="w"> </span>delete<span class="w"> </span>peerauthentication<span class="w"> </span>app-permissive-mtls
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>app<span class="w"> </span>delete<span class="w"> </span>authorizationpolicy<span class="w"> </span>nginx-allow-client
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>dubbo-system<span class="w"> </span>delete<span class="w"> </span>peerauthentication<span class="w"> </span>default
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>kubectl<span class="w"> </span>delete<span class="w"> </span>-f<span class="w"> </span>samples/app/deployment.yaml
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>kubectl<span class="w"> </span>delete<span class="w"> </span>ns<span class="w"> </span>app
+</span></code></pre></div>
+          
+        </article>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+
+<footer class="md-footer">
+  <nav class="md-footer__inner md-grid" aria-label="页脚">
+    <a href="../../traffic/egress/egress/" class="md-footer__link md-footer__link--prev" rel="prev">
+      <div class="md-footer__button md-icon">
+        <svg viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </div>
+      <div class="md-footer__title">
+        <span class="md-footer__direction">上一页</span>
+        <div class="md-ellipsis">Egress</div>
+      </div>
+    </a>
+    <a href="../jwt/" class="md-footer__link md-footer__link--next" rel="next">
+      <div class="md-footer__title">
+        <span class="md-footer__direction">下一页</span>
+        <div class="md-ellipsis">JWT 认证与授权</div>
+      </div>
+      <div class="md-footer__button md-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+      </div>
+    </a>
+  </nav>
+  <div class="md-footer-meta">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">Copyright © 2026 The Apache Kdubbo Team.</div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="../../../assets/kd-theme.js?v=20260726-r2"></script>
+<script src="../../../assets/custom.js?v=20260726-r2"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+<script src="../../../assets/mermaid-init.js?v=20260809-responsive-r1"></script>
+<script src="../../../search/main.js"></script>
+</body>
+</html>

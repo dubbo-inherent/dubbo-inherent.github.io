@@ -1,0 +1,28 @@
+/* components.css — Reusable UI components: buttons, admonitions, code blocks, palette switch, language switch, cards. */
+
+/* ── Mermaid diagrams ─────────────────────────────────────────────────────────
+   pymdownx.superfences renders a ```mermaid fence as <div class="mermaid"> via
+   fence_div_format. The div wrapper matters: mermaid reads innerHTML, so a
+   <code> child (what fence_code_format emits) lands in the diagram source and
+   fails to parse. mermaid replaces the contents with an <svg> once it runs. */
+.md-typeset .mermaid {
+  margin: 1.6rem 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  /* A wide flow scrolls inside its own box rather than pushing the page. */
+  overflow-x: auto;
+  display: flex;
+  justify-content: center;
+  /* `safe` keeps the left edge reachable once the diagram outgrows the column;
+     plain centring would push the start of it out of view. */
+  justify-content: safe center;
+}
+
+.md-typeset .mermaid svg {
+  /* Keep natural size on wide screens, shrink to the content column on narrow
+     screens, and never enlarge a compact diagram to fill the page. */
+  width: auto;
+  max-width: 100%;
+  height: auto;
+}

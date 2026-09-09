@@ -1,0 +1,691 @@
+/* kd-theme.css — structural stylesheet for the standalone Kdubbo theme.
+   Replaces the layout/component CSS that MkDocs Material used to provide.
+   Skin (colors, hairlines, typography accents) stays in docs/assets/
+   overrides.css, which loads after this file and wins where both apply.
+   Metrics follow Material conventions: html at 125% so 1rem = 20px. */
+
+/* --- Reset / base --- */
+html {
+  font-size: 125%;
+  height: 100%;
+  box-sizing: border-box;
+  -webkit-text-size-adjust: none;
+}
+*, *::before, *::after { box-sizing: inherit; }
+body {
+  margin: 0;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--mesh-font-system, system-ui, sans-serif);
+  font-size: 0.8rem;
+}
+input, button { font: inherit; }
+svg { fill: currentColor; }
+
+.md-grid { max-width: 80rem; margin-left: auto; margin-right: auto; width: 100%; }
+.md-toggle { display: none; }
+.md-icon svg { display: block; width: 1.2rem; height: 1.2rem; }
+.md-ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Keep the footer at the viewport edge when a page has little content. */
+.md-container { flex: 1 0 auto; }
+.md-footer { flex: 0 0 auto; }
+
+/* --- Header --- */
+.md-header {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  transition: background 200ms ease;
+}
+.md-header__inner {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  min-height: 2.4rem;
+  padding: 0 1.1rem;
+}
+.md-header__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  padding: 0.3rem;
+  text-decoration: none;
+}
+.md-header__title { min-width: 0; }
+.md-header__topic { white-space: nowrap; }
+.md-header__spacer { flex: 1 1 auto; }
+
+/* Drawer hamburger — only on narrow screens */
+label.md-header__button[for="__drawer"] { display: none; }
+
+/* --- Header topnav (关于 / 消息 / 文档 / 社区 / 模型 / GitHub) — generous,
+   evenly spread spacing; the whole cluster sits well in from the right edge --- */
+.kd-topnav {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  margin-left: 1.8rem;
+  margin-right: 4rem;
+}
+.kd-topnav__link {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--mesh-ink, #1A2332);
+  text-decoration: none;
+  padding: 0.2rem 0;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+.kd-topnav__link:hover { color: var(--mesh-accent, #1D5BC4); }
+.kd-topnav__link--active { color: var(--mesh-ink, #1A2332); font-weight: 600; }
+.kd-topnav__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mesh-ink, #1A2332);
+  transition: color 160ms ease;
+}
+.kd-topnav__icon:hover { color: var(--mesh-accent, #1D5BC4); }
+.kd-topnav__icon svg { width: 1.2rem; height: 1.2rem; }
+
+/* Topnav dropdown (关于) — the panel keeps a transparent gutter above the card
+   so the pointer can travel from trigger to panel without closing it. */
+.kd-topnav__menu { position: relative; display: flex; align-items: center; }
+.kd-topnav__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.34rem;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+.kd-topnav__caret {
+  width: 0.34rem;
+  height: 0.34rem;
+  border-right: 1.4px solid currentColor;
+  border-bottom: 1.4px solid currentColor;
+  transform: translateY(-0.09rem) rotate(45deg);
+  transition: transform 160ms ease;
+}
+.kd-topnav__panel {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding-top: 0.55rem;
+  z-index: 6;
+}
+.kd-topnav__menu:hover .kd-topnav__panel,
+.kd-topnav__menu:focus-within .kd-topnav__panel { display: block; }
+.kd-topnav__menu:hover .kd-topnav__caret,
+.kd-topnav__menu:focus-within .kd-topnav__caret { transform: translateY(0.02rem) rotate(-135deg); }
+.kd-topnav__panel-inner {
+  background: var(--mesh-surface, #FFFFFF);
+  border: 1px solid var(--mesh-rule-strong, #C7D2E0);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.16);
+  padding: 0.3rem;
+  width: max-content;
+}
+.kd-topnav__panel-link {
+  display: block;
+  text-decoration: none;
+  padding: 0.5rem 0.6rem;
+  transition: background 160ms ease;
+}
+.kd-topnav__panel-link:hover { background: var(--mesh-accent-light, rgba(29, 91, 196, 0.055)); }
+.kd-topnav__panel-title {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--mesh-ink, #1A2332);
+}
+.kd-topnav__panel-link:hover .kd-topnav__panel-title { color: var(--mesh-accent, #1D5BC4); }
+.kd-topnav__panel-desc {
+  display: block;
+  margin-top: 0.18rem;
+  font-size: 0.63rem;
+  line-height: 1.45;
+  color: var(--mesh-ink-muted, #636F80);
+}
+
+/* Tighter spacing, and allowed to wrap: between this breakpoint and the phone
+   one below there are widths where the row is a few pixels short, and the
+   English labels are wider than the Chinese, so the exact width that fails
+   depends on the language. Wrapping removes the question. */
+@media screen and (max-width: 60em) {
+  .kd-topnav {
+    gap: 0.5rem 1.1rem;
+    margin-left: 1rem;
+    margin-right: 1.2rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    min-width: 0;
+  }
+}
+
+/* On a phone the six items cannot sit on one line, and because each link is
+   nowrap the row pushed the whole document wider than the viewport rather than
+   being clipped.
+
+   Wrapping is the fix, but wrapping in place is not: the logo, drawer icon and
+   language switcher already claim most of the row, leaving the nav so narrow it
+   wrapped to one item per line and grew a sticky header to two thirds of the
+   screen. Giving it the full width of its own row lets the same six items fit
+   in one or two lines instead.
+
+   Scrolling the nav horizontally would also have worked, except the About
+   dropdown is absolutely positioned inside it and a scroll container would clip
+   the panel. */
+@media screen and (max-width: 40em) {
+  .md-header__inner { flex-wrap: wrap; row-gap: 0.15rem; padding-bottom: 0.35rem; }
+  .kd-topnav {
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0.35rem 0.85rem;
+    margin-left: 0;
+    margin-right: 0;
+    min-width: 0;
+  }
+}
+
+/* --- Search — collapsed to a magnifier; expands into the pill on demand --- */
+.md-search { position: relative; margin-right: 0.35rem; }
+.md-search__form { position: relative; margin: 0; min-height: 1.85rem; display: flex; align-items: center; }
+.md-search__input {
+  width: 2.2rem;
+  height: 1.85rem;
+  padding: 0 0 0 2.1rem;
+  opacity: 0;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  /* !important so the width/opacity motion survives the skin's transition list */
+  transition: width 260ms cubic-bezier(0.4, 0, 0.2, 1),
+              padding 260ms cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 200ms ease,
+              border-color 200ms ease,
+              background-color 200ms ease,
+              border-radius 200ms ease !important;
+  will-change: width;
+}
+.md-search__input::-webkit-search-cancel-button { display: none; }
+[data-md-toggle="search"]:checked ~ .md-header .md-search__input,
+.md-search__input:focus {
+  width: 14rem;
+  padding: 0 0.9rem 0 2.1rem;
+  opacity: 1;
+  cursor: text;
+}
+/* Magnifier — full-height hit target covering the whole collapsed pill */
+.md-search__icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.2rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--mesh-ink, #1A2332);
+  transition: color 160ms ease;
+  z-index: 1;
+}
+.md-search__icon:hover { color: var(--mesh-accent, #1D5BC4); }
+.md-search__icon svg { width: 1.1rem; height: 1.1rem; }
+.md-search__output {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 23rem;
+  max-width: calc(100vw - 2rem);
+  z-index: 5;
+  overflow: hidden;
+  background: var(--mesh-bg, #EFF3F9);
+}
+[data-md-toggle="search"]:checked ~ .md-header .md-search--results .md-search__output { display: block; }
+.md-search__scrollwrap { max-height: 65vh; overflow-y: auto; overscroll-behavior: contain; }
+.md-search-result__list { list-style: none; margin: 0; padding: 0; }
+.md-search-result__link {
+  display: block;
+  padding: 0.5em 0.8em;
+  text-decoration: none;
+  border-bottom: 1px solid var(--mesh-rule, rgba(26,35,50,.1));
+}
+.md-search-result__item:last-child .md-search-result__link { border-bottom: 0; }
+.md-search-result__link:hover,
+.md-search-result__link:focus {
+  background: var(--mesh-accent-light, rgba(29,91,196,.055));
+  outline: none;
+}
+.md-search-result__article { position: relative; }
+.md-search-result__article h1 {
+  margin: 0 0 0.15em;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--mesh-ink, #1A2332);
+  line-height: 1.4;
+}
+.md-search-result__teaser {
+  margin: 0;
+  color: var(--mesh-ink-muted, #636F80);
+}
+.md-search-result mark {
+  background: transparent;
+  color: var(--mesh-accent, #1D5BC4);
+  font-weight: 600;
+}
+.md-search-result__meta {
+  padding: 0.55em 0.8em;
+  font-size: 0.66rem;
+  color: var(--mesh-ink-muted, #636F80);
+}
+
+/* --- Language select --- */
+.md-header__option .md-select { position: relative; }
+.md-select__inner {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 5;
+}
+.md-select:hover .md-select__inner,
+.md-select:focus-within .md-select__inner { display: block; }
+.md-select__list { list-style: none; margin: 0; padding: 0; }
+.md-select__link { display: block; text-decoration: none; white-space: nowrap; cursor: pointer; }
+
+/* --- Repo source link --- */
+.md-header__source { margin-left: 0.4rem; }
+.md-source {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-decoration: none;
+  color: var(--mesh-ink, #1A2332);
+  font-size: 0.65rem;
+  transition: color 160ms ease;
+}
+.md-source:hover { color: var(--mesh-accent, #1D5BC4); }
+.md-source__icon svg { width: 1rem; height: 1rem; }
+
+/* --- Layout: sidebar / content / toc --- */
+.md-main__inner {
+  display: flex;
+  align-items: flex-start;
+  padding-top: 1.2rem;
+}
+.md-sidebar {
+  flex-shrink: 0;
+  width: 12.8rem;
+  position: sticky;
+  top: 3.2rem;
+  max-height: calc(100vh - 4rem);
+  align-self: flex-start;
+}
+.md-sidebar--secondary { order: 2; }
+.md-sidebar__scrollwrap {
+  max-height: calc(100vh - 4.4rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding: 0 0.4rem 1.2rem;
+}
+.md-content {
+  flex: 1 1 auto;
+  min-width: 0;
+  order: 1;
+  padding: 0 1.6rem;
+}
+.md-content__inner {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding-bottom: 2.4rem;
+}
+
+/* --- Nav mechanics --- */
+.md-nav { font-size: 0.76rem; }
+.md-nav__list { list-style: none; margin: 0; padding: 0; }
+.md-nav a { text-decoration: none; }
+.md-nav__link { cursor: pointer; }
+.md-nav__title { display: block; }
+.md-nav__item--nested > .md-nav { display: none; }
+.md-nav__item--nested > .md-nav__toggle:checked ~ .md-nav { display: block; }
+
+/* Chevron */
+.md-nav__icon { display: inline-flex; align-items: center; justify-content: center; }
+.md-nav__icon::before {
+  content: "";
+  display: block;
+  width: 0.34rem;
+  height: 0.34rem;
+  border-right: 1.4px solid currentColor;
+  border-bottom: 1.4px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 180ms ease;
+}
+.md-nav__toggle:checked ~ .md-nav__link .md-nav__icon::before,
+.md-nav__toggle:checked ~ .md-nav__container .md-nav__icon::before { transform: rotate(45deg); }
+
+/* Linked section header (group with an index page) */
+.md-nav__container { display: flex; align-items: center; }
+.md-nav__container > a.md-nav__link { flex: 1 1 auto; min-width: 0; }
+.md-nav__container > .md-nav__chevron { flex: 0 0 auto; }
+
+/* Top-level plain links match the section-header look of top-level groups
+   (skin gives group labels a hairline underline; mirror it for links).
+   !important needed to outrank the skin's base .md-nav__link rules. */
+.md-nav--primary > .md-nav__list > .md-nav__item > a.md-nav__link {
+  font-size: 0.78rem !important;
+  font-weight: 500 !important;
+  padding: 0.5rem 0.6rem !important;
+  margin: 0 0 0.4rem !important;
+  border-bottom: 1px solid var(--mesh-rule, rgba(26,35,50,.1)) !important;
+}
+/* --- Typeset (prose) --- */
+.md-typeset {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  overflow-wrap: break-word;
+}
+.md-typeset h1 { font-size: 1.75em; margin: 0 0 1em; }
+.md-typeset h2 { font-size: 1.4em; margin: 1.6em 0 0.7em; }
+.md-typeset h3 { font-size: 1.15em; margin: 1.6em 0 0.8em; }
+.md-typeset h4, .md-typeset h5, .md-typeset h6 { font-size: 1em; margin: 1.25em 0 0.6em; }
+.md-typeset p { margin: 0 0 1em; }
+.md-typeset ul, .md-typeset ol { margin: 0 0 1em; padding-left: 1.4em; }
+.md-typeset li { margin: 0.25em 0; }
+.md-typeset img { max-width: 100%; height: auto; }
+.md-typeset hr { border: 0; border-top: 1px solid var(--mesh-rule, rgba(26,35,50,.1)); margin: 1.5em 0; }
+.md-typeset blockquote {
+  margin: 1em 0;
+  padding: 0.1em 0 0.1em 0.9em;
+  border-left: 2px solid var(--mesh-rule-strong, rgba(26,35,50,.24));
+  color: var(--mesh-ink-muted, #636F80);
+}
+.md-typeset pre { overflow-x: auto; }
+.md-typeset code { font-family: var(--mesh-font-mono, monospace); }
+.md-typeset table { border-collapse: collapse; }
+.md-typeset table:not([class]) { display: table; width: 100%; }
+.md-typeset table:not([class]) th,
+.md-typeset table:not([class]) td { padding: 0.55em 0.8em; text-align: left; vertical-align: top; }
+
+/* Reference tables have four columns of prose and cannot usefully reflow on a
+   phone. Nothing wraps them in a scroll container, so they pushed the whole
+   document wider than the viewport. `display: block` makes the table itself the
+   scroller — it costs column alignment across rows, which is why this is scoped
+   to widths where the table could not have lined up anyway. */
+@media screen and (max-width: 48em) {
+  .md-typeset table:not([class]) {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Heading permalinks (¶) */
+.md-typeset .headerlink {
+  margin-left: 0.4em;
+  color: var(--mesh-ink-whisper, #8792A1);
+  border-bottom: none;
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+.md-typeset h1:hover .headerlink,
+.md-typeset h2:hover .headerlink,
+.md-typeset h3:hover .headerlink,
+.md-typeset h4:hover .headerlink,
+.md-typeset h5:hover .headerlink,
+.md-typeset h6:hover .headerlink,
+.md-typeset .headerlink:focus { opacity: 1; }
+
+/* --- Code copy button --- */
+.md-typeset .highlight { position: relative; }
+.md-clipboard {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  z-index: 1;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  color: var(--mesh-ink-muted, #636F80);
+  opacity: 0;
+  transition: opacity 160ms ease, color 160ms ease;
+}
+.md-typeset .highlight:hover .md-clipboard,
+.md-clipboard:focus { opacity: 1; }
+.md-clipboard::after {
+  content: "";
+  display: block;
+  width: 0.85rem;
+  height: 0.85rem;
+  background-color: currentColor;
+  -webkit-mask-image: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cpath d="M19 21H8V7h11m0-2H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m-3-4H4a2 2 0 0 0-2 2v14h2V3h12V1Z"/%3E%3C/svg%3E');
+  mask-image: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cpath d="M19 21H8V7h11m0-2H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m-3-4H4a2 2 0 0 0-2 2v14h2V3h12V1Z"/%3E%3C/svg%3E');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* --- Code highlight (Pygments classes, Material's light palette) --- */
+:root {
+  --md-code-hl-number-color: #d52a2a;
+  --md-code-hl-special-color: #db1457;
+  --md-code-hl-function-color: #a846b9;
+  --md-code-hl-constant-color: #6e59d9;
+  --md-code-hl-keyword-color: #3f6ec6;
+  --md-code-hl-string-color: #1c7d4d;
+  --md-code-hl-name-color: var(--mesh-ink, #1A2332);
+  --md-code-hl-operator-color: var(--mesh-ink-muted, #636F80);
+  --md-code-hl-punctuation-color: var(--mesh-ink-muted, #636F80);
+  --md-code-hl-comment-color: var(--mesh-ink-muted, #636F80);
+  --md-code-hl-generic-color: var(--mesh-ink-muted, #636F80);
+  --md-code-hl-variable-color: var(--mesh-ink-muted, #636F80);
+}
+
+/* Release-status strip: deliberately compact so it reads before navigation
+   without competing with page content. */
+.kd-build-notice {
+  position: relative;
+  z-index: 30;
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.32rem 1rem;
+  color: #28476f;
+  background: rgba(225, 237, 250, 0.72);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  backdrop-filter: blur(14px) saturate(120%);
+  border-bottom: 1px solid rgba(89, 130, 181, 0.18);
+  box-shadow: 0 1px 6px rgba(40, 71, 111, 0.08);
+  font-family: Monaco, Menlo, Consolas, "Liberation Mono", "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", monospace;
+  font-size: 0.68rem;
+  line-height: 1.35;
+  letter-spacing: 0.015em;
+  text-align: center;
+}
+
+@media screen and (max-width: 40rem) {
+  .kd-build-notice {
+    padding: 0.42rem 0.75rem;
+    font-size: 0.62rem;
+  }
+}
+.highlight .o, .highlight .ow { color: var(--md-code-hl-operator-color); }
+.highlight .p { color: var(--md-code-hl-punctuation-color); }
+.highlight .cpf, .highlight .l, .highlight .s, .highlight .s1, .highlight .s2,
+.highlight .sb, .highlight .sc, .highlight .si, .highlight .ss { color: var(--md-code-hl-string-color); }
+.highlight .cp, .highlight .se, .highlight .sh, .highlight .sr, .highlight .sx { color: var(--md-code-hl-special-color); }
+.highlight .il, .highlight .m, .highlight .mb, .highlight .mf, .highlight .mh,
+.highlight .mi, .highlight .mo { color: var(--md-code-hl-number-color); }
+.highlight .k, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr,
+.highlight .kt { color: var(--md-code-hl-keyword-color); }
+.highlight .kc, .highlight .n { color: var(--md-code-hl-name-color); }
+.highlight .bp, .highlight .nb, .highlight .no { color: var(--md-code-hl-constant-color); }
+.highlight .nc, .highlight .ne, .highlight .nf, .highlight .nn { color: var(--md-code-hl-function-color); }
+.highlight .nd, .highlight .ni, .highlight .nl, .highlight .nt { color: var(--md-code-hl-keyword-color); }
+.highlight .c, .highlight .c1, .highlight .ch, .highlight .cm, .highlight .cs,
+.highlight .sd { color: var(--md-code-hl-comment-color); }
+.highlight .na, .highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi { color: var(--md-code-hl-variable-color); }
+.highlight .ge, .highlight .gh, .highlight .go, .highlight .gp, .highlight .gr,
+.highlight .gs, .highlight .gt, .highlight .gu { color: var(--md-code-hl-generic-color); }
+.highlight .hll {
+  display: block;
+  margin: 0 -0.7rem;
+  padding: 0 0.7rem;
+  background-color: rgba(29, 91, 196, 0.1);
+  box-shadow: 2px 0 0 0 var(--mesh-accent, #1D5BC4) inset;
+}
+
+/* --- Admonitions (minimal flat set) --- */
+.md-typeset .admonition, .md-typeset details {
+  margin: 1em 0;
+  padding: 0 0.8em;
+  border: 1px solid var(--mesh-rule, rgba(26,35,50,.1));
+  border-left: 3px solid var(--mesh-accent, #1D5BC4);
+  overflow: hidden;
+}
+.md-typeset .admonition-title, .md-typeset summary {
+  font-weight: 600;
+  margin: 0 -0.8em 0.6em;
+  padding: 0.45em 0.8em;
+  background: var(--mesh-accent-subtle, rgba(29,91,196,.12));
+}
+.md-typeset .admonition.warning, .md-typeset .admonition.caution { border-left-color: #d97706; }
+.md-typeset .admonition.warning .admonition-title { background: rgba(217, 119, 6, 0.12); }
+.md-typeset .admonition.danger, .md-typeset .admonition.failure { border-left-color: #dc2626; }
+.md-typeset .admonition.danger .admonition-title { background: rgba(220, 38, 38, 0.12); }
+.md-typeset .admonition.tip, .md-typeset .admonition.success { border-left-color: #16a34a; }
+.md-typeset .admonition.tip .admonition-title { background: rgba(22, 163, 74, 0.12); }
+
+/* --- Content tabs (pymdownx.tabbed, alternate style) --- */
+.md-typeset .tabbed-set { position: relative; margin: 1em 0; }
+.md-typeset .tabbed-set > input { display: none; }
+.md-typeset .tabbed-labels {
+  display: flex;
+  justify-content: center;   /* 标签栏居中；下方内容仍保持左对齐 */
+  gap: 0.6em;
+  border-bottom: 1px solid var(--mesh-rule, rgba(26,35,50,.1));
+  overflow-x: auto;
+}
+.md-typeset .tabbed-labels > label {
+  padding: 0.45em 1.1em;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  color: var(--mesh-ink-muted, #636F80);
+}
+.md-typeset .tabbed-content { display: none; }
+/* support up to 8 tabs */
+.md-typeset .tabbed-set > input:nth-child(1):checked ~ .tabbed-labels > label:nth-child(1),
+.md-typeset .tabbed-set > input:nth-child(2):checked ~ .tabbed-labels > label:nth-child(2),
+.md-typeset .tabbed-set > input:nth-child(3):checked ~ .tabbed-labels > label:nth-child(3),
+.md-typeset .tabbed-set > input:nth-child(4):checked ~ .tabbed-labels > label:nth-child(4),
+.md-typeset .tabbed-set > input:nth-child(5):checked ~ .tabbed-labels > label:nth-child(5),
+.md-typeset .tabbed-set > input:nth-child(6):checked ~ .tabbed-labels > label:nth-child(6),
+.md-typeset .tabbed-set > input:nth-child(7):checked ~ .tabbed-labels > label:nth-child(7),
+.md-typeset .tabbed-set > input:nth-child(8):checked ~ .tabbed-labels > label:nth-child(8) {
+  color: var(--mesh-accent, #1D5BC4);
+  border-bottom-color: var(--mesh-accent, #1D5BC4);
+}
+.md-typeset .tabbed-set > input:nth-child(1):checked ~ .tabbed-content > .tabbed-block:nth-child(1),
+.md-typeset .tabbed-set > input:nth-child(2):checked ~ .tabbed-content > .tabbed-block:nth-child(2),
+.md-typeset .tabbed-set > input:nth-child(3):checked ~ .tabbed-content > .tabbed-block:nth-child(3),
+.md-typeset .tabbed-set > input:nth-child(4):checked ~ .tabbed-content > .tabbed-block:nth-child(4),
+.md-typeset .tabbed-set > input:nth-child(5):checked ~ .tabbed-content > .tabbed-block:nth-child(5),
+.md-typeset .tabbed-set > input:nth-child(6):checked ~ .tabbed-content > .tabbed-block:nth-child(6),
+.md-typeset .tabbed-set > input:nth-child(7):checked ~ .tabbed-content > .tabbed-block:nth-child(7),
+.md-typeset .tabbed-set > input:nth-child(8):checked ~ .tabbed-content > .tabbed-block:nth-child(8) { display: block; }
+.md-typeset .tabbed-set > input:checked ~ .tabbed-content { display: block; }
+.md-typeset .tabbed-block { display: none; padding-top: 0.6em; }
+
+/* --- Release / 公告栏 page — center the page title and its intro line only
+   (article carries .kd-release; deeper release content stays left-aligned) --- */
+.kd-release > h1,
+.kd-release > h1 + p { text-align: center; }
+
+/* --- Footer --- */
+.md-footer__inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 0.8rem;
+}
+.md-footer__link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 48%;
+  min-width: 0;
+  text-decoration: none;
+  transition: color 160ms ease, opacity 160ms ease;
+}
+.md-footer__link--next { margin-left: auto; text-align: right; }
+.md-footer__direction { display: block; font-size: 0.62rem; color: var(--mesh-ink-muted, #636F80); }
+.md-footer__title { font-size: 0.78rem; min-width: 0; }
+.md-footer-meta__inner { padding: 0.55rem 0.8rem; }
+.md-copyright { font-size: 0.7rem; }
+
+/* --- Overlay + drawer (mobile) --- */
+.md-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  background: rgba(15, 23, 42, 0.32);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 250ms ease;
+}
+
+@media screen and (max-width: 76.1875em) {
+  label.md-header__button[for="__drawer"] { display: inline-flex; }
+  .md-sidebar--primary {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 12.8rem;
+    max-height: none;
+    z-index: 6;
+    transform: translateX(-102%);
+    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    border-right: 1px solid var(--mesh-rule, rgba(26,35,50,.1));
+    padding-top: 0.6rem;
+  }
+  .md-sidebar--primary .md-sidebar__scrollwrap { max-height: 100%; }
+  [data-md-toggle="drawer"]:checked ~ .md-container .md-sidebar--primary { transform: translateX(0); }
+  [data-md-toggle="drawer"]:checked ~ .md-overlay { opacity: 1; pointer-events: auto; }
+  .md-sidebar--secondary { display: none; }
+  .md-content { padding: 0 0.9rem; }
+}
+
+@media screen and (max-width: 60em) {
+  .md-header__topic { display: none; }
+  .md-source__repository { display: none; }
+  [data-md-toggle="search"]:checked ~ .md-header .md-search__input,
+  .md-search__input:focus { width: 9rem; }
+  .md-footer__title { font-size: 0.7rem; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .md-search__input,
+  .md-sidebar--primary,
+  .md-overlay,
+  .md-nav__icon::before { transition: none !important; }
+}

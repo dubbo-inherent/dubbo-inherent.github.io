@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en" data-md-color-scheme="default">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>请求重试 - Apache Dubbo Inherent Mesh</title>
+  <link rel="canonical" href="https://kdubbo.github.io/en/tasks/traffic/request-retries/request-retries/">
+  <link rel="icon" href="../../../../../assets/static/logo.ico">
+  <meta name="generator" content="mkdocs-1.6.1">
+  <link rel="stylesheet" href="../../../../../assets/kd-theme.css?v=20260820-r2">
+  <link rel="stylesheet" href="../../../../../assets/custom.css?v=20260809-responsive-r1">
+  <script id="__config" type="application/json">{"base": "../../../..", "lang": "en"}</script>
+  
+</head>
+<body dir="ltr">
+
+<aside class="kd-build-notice" role="status" aria-label="Documentation status">
+  <span>
+    Documentation is under construction. All content is currently unavailable. A new version is coming soon.
+  </span>
+</aside>
+
+<input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+<input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+<label class="md-overlay" for="__drawer"></label>
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Apache Dubbo Inherent Mesh">
+    <a href="../../../../" class="md-header__button md-logo" aria-label="Apache Dubbo Inherent Mesh">
+      <img src="../../../../../assets/static/logo.png" alt="logo">
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="Menu">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title">
+      <div class="md-header__ellipsis">
+        <span class="md-header__topic">Apache Dubbo Inherent Mesh</span>
+      </div>
+    </div>
+    <div class="md-header__spacer"></div><div class="md-search" role="search">
+      <div class="md-search__inner">
+        <form class="md-search__form" autocomplete="off" onsubmit="return false">
+          <input type="search" class="md-search__input" name="query" aria-label="Search"
+                 placeholder="Search" autocapitalize="off" autocorrect="off" spellcheck="false">
+          <label class="md-search__icon md-icon" for="__search" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+          </label>
+        </form>
+        <div class="md-search__output">
+          <div class="md-search__scrollwrap">
+            <div class="md-search-result">
+              <ol class="md-search-result__list" role="presentation"></ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+
+<div class="md-container" data-md-component="container">
+  <main class="md-main" data-md-component="main">
+    <div class="md-main__inner md-grid">
+      <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+        <div class="md-sidebar__scrollwrap">
+          <div class="md-sidebar__inner">
+            <nav class="md-nav md-nav--primary" aria-label="Navigation">
+              <ul class="md-nav__list" data-md-scrollfix>
+                
+    <li class="md-nav__item">
+      <a href="../../../../" class="md-nav__link">Home</a>
+    </li>
+                
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n2">
+      <div class="md-nav__container">
+        <a href="../../../../overview/" class="md-nav__link">Overview</a>
+        <label class="md-nav__link md-nav__chevron" for="__nav-n2" aria-label="Overview"><span class="md-nav__icon md-icon"></span></label>
+      </div>
+      <nav class="md-nav" aria-label="Overview">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n2-2">
+      <label class="md-nav__link" for="__nav-n2-2">Basic Concepts<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Basic Concepts">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../../../concepts/traffic-management/" class="md-nav__link">Traffic Management</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../../concepts/security/" class="md-nav__link">Security</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../../concepts/observability/" class="md-nav__link">Observability</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../../concepts/extensibility/" class="md-nav__link">Extensibility</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../../concepts/scalability/" class="md-nav__link">Scalability</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+        </ul>
+      </nav>
+    </li>
+                
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n3">
+      <label class="md-nav__link" for="__nav-n3">Installation<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Installation">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../../../setup/install/dubboctl/" class="md-nav__link">Dubboctl</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../../setup/install/helm/" class="md-nav__link">Helm</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../../setup/install/multicluster/" class="md-nav__link">Multicluster</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+                
+    <li class="md-nav__item md-nav__item--nested md-nav__item--active">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4" checked>
+      <label class="md-nav__link" for="__nav-n4">Tasks<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Tasks">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item md-nav__item--nested md-nav__item--active">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-1" checked>
+      <label class="md-nav__link" for="__nav-n4-1">Traffic Management<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Traffic Management">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../routing/routing/" class="md-nav__link">Traffic Routing</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../canary/canary/" class="md-nav__link">Traffic Splitting</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../request-timeouts/request-timeouts/" class="md-nav__link">请求超时</a>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--active">
+      <a href="./" class="md-nav__link" aria-current="page">请求重试</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../fault-injection/fault-injection/" class="md-nav__link">故障注入</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../circuit-breaking/circuit-breaking/" class="md-nav__link">熔断</a>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-1-7">
+      <label class="md-nav__link" for="__nav-n4-1-7">Gateway<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Gateway">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../ingress/gateway-api/" class="md-nav__link">Ingress</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../egress/egress/" class="md-nav__link">Egress</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+        </ul>
+      </nav>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-2">
+      <label class="md-nav__link" for="__nav-n4-2">Security<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Security">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../../security/mtls/" class="md-nav__link">mTLS</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../security/jwt/" class="md-nav__link">JWT 认证与授权</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-3">
+      <label class="md-nav__link" for="__nav-n4-3">Observability<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Observability">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../../observability/metrics/metrics/" class="md-nav__link">指标</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../observability/logs/logs/" class="md-nav__link">日志</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-4">
+      <label class="md-nav__link" for="__nav-n4-4">Extensibility<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Extensibility">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../../extensibility/service-entry/" class="md-nav__link">网格服务</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../extensibility/virtual-machines/" class="md-nav__link">非网格服务</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+          
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n4-5">
+      <label class="md-nav__link" for="__nav-n4-5">Scalability<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="Scalability">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../../scalability/activation/" class="md-nav__link">On-Demand Activation</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+        </ul>
+      </nav>
+    </li>
+                
+    <li class="md-nav__item">
+      <a href="../../../../example/moviereview/" class="md-nav__link">Example</a>
+    </li>
+                
+    <li class="md-nav__item md-nav__item--nested">
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-n6">
+      <label class="md-nav__link" for="__nav-n6">参考<span class="md-nav__icon md-icon"></span></label>
+      <nav class="md-nav" aria-label="参考">
+        <ul class="md-nav__list">
+          
+    <li class="md-nav__item">
+      <a href="../../../../reference/application-standard-metrics/" class="md-nav__link">应用程序标准指标</a>
+    </li>
+          
+    <li class="md-nav__item">
+      <a href="../../../../dxgate/cost-control/" class="md-nav__link">dxgate cost control</a>
+    </li>
+        </ul>
+      </nav>
+    </li>
+                
+    <li class="md-nav__item">
+      <a href="../../../../operation/" class="md-nav__link">Operations</a>
+    </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+        <div class="md-sidebar__scrollwrap">
+          <div class="md-sidebar__inner">
+            <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+              <span class="md-nav__title">On this page</span>
+              <ul class="md-nav__list">
+                
+  <li class="md-nav__item">
+    <a href="#_2" class="md-nav__link">前提</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#_3" class="md-nav__link">配置</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#_4" class="md-nav__link">验证</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#_5" class="md-nav__link">语义与边界</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#_6" class="md-nav__link">清理</a>
+  </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="md-content" data-md-component="content">
+        <article class="md-content__inner md-typeset">
+          
+          <h1 id="_1">请求重试<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>本任务使用 Gateway API <code>HTTPRoute.rules[].retry</code> 为服务间 Inherent 出站请求配置自动重试。控制面会把策略转换成 xDS RDS <code>RouteAction.RetryPolicy</code>，数据面在连接失败、连接重置或命中指定 HTTP 状态码时重新选择端点。</p>
+<h2 id="_2">前提<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p><code>retry</code> 在 Gateway API v1.4.1 中属于 Extended/Experimental 字段。集群必须安装 experimental CRD，standard CRD 会删除或拒绝该字段：</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml
+</span></code></pre></div>
+<p>确认 CRD 已包含重试字段：</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>kubectl<span class="w"> </span>explain<span class="w"> </span>httproute.spec.rules.retry
+</span></code></pre></div>
+<p>同一个父 Service 只保留本任务的 <code>HTTPRoute</code>，避免其他规则先被匹配：</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>moviereview<span class="w"> </span>delete<span class="w"> </span>httproute<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span>moviepage-routing<span class="w"> </span>reviews-routing<span class="w"> </span>reviews-canary<span class="w"> </span>reviews-timeout<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span>--ignore-not-found
+</span></code></pre></div>
+<h2 id="_3">配置<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>下面的规则在连接失败、连接重置以及 HTTP <code>500</code>、<code>502</code>、<code>503</code>、<code>504</code> 时最多重试 3 次。每次上游调用最多等待 1 秒，初次请求和全部重试合计不能超过 5 秒；第一次重试至少等待 100 毫秒，后续使用指数退避，最大为 1 秒。</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.networking.k8s.io/v1</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HTTPRoute</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nt">metadata</span><span class="p">:</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reviews-retry</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">moviereview</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span><span class="nt">parentRefs</span><span class="p">:</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Service</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reviews</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9080</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">  </span><span class="nt">rules</span><span class="p">:</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">retry</span><span class="p">:</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">      </span><span class="nt">attempts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">      </span><span class="nt">codes</span><span class="p">:</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">502</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">503</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">504</span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">      </span><span class="nt">backoff</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100ms</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">    </span><span class="nt">timeouts</span><span class="p">:</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">      </span><span class="nt">request</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5s</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="w">      </span><span class="nt">backendRequest</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1s</span>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="w">    </span><span class="nt">backendRefs</span><span class="p">:</span>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reviews-v1</span>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9080</span>
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="w">      </span><span class="nt">weight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reviews-v2</span>
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9080</span>
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="w">      </span><span class="nt">weight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
+</span></code></pre></div>
+<p>应用并确认资源通过 CRD 校验：</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>reviews-retry.yaml
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>moviereview<span class="w"> </span>get<span class="w"> </span>httproute<span class="w"> </span>reviews-retry<span class="w"> </span>-o<span class="w"> </span>yaml
+</span></code></pre></div>
+<h2 id="_4">验证<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>先把 dubbod 的测试入口转发到本地：</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>dubbo-system<span class="w"> </span>port-forward<span class="w"> </span>deploy/dubbod<span class="w"> </span><span class="m">17171</span>:17171
+</span></code></pre></div>
+<p>从另一个终端发送真实请求：</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>grpcurl<span class="w"> </span>-plaintext<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">'{"url":"xds:///reviews.moviereview.svc.cluster.local:9080","path":"/reviews","count":20}'</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span>:17171<span class="w"> </span>proto.XDSTestService/ForwardHTTP<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">'.output | join("")'</span>
+</span></code></pre></div>
+<p>正常情况下输出会来自 <code>reviews-v1</code> 和 <code>reviews-v2</code>。验证重试时，让一个测试后端返回配置中的 <code>503</code>，或让首选测试端点拒绝连接；Inherent outbound 客户端会在总请求超时内选择下一个端点。把返回码改成未配置的 <code>501</code> 时，不会触发状态码重试。</p>
+<h2 id="_5">语义与边界<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>attempts</code> 是重试次数，不包含初次请求；<code>attempts: 3</code> 最多产生 4 次上游调用。</li>
+<li>只应对能够安全重放的幂等请求启用自动重试，避免重复写入、扣款或创建资源。</li>
+<li><code>timeouts.request</code> 是整个逻辑请求的时间预算，包含退避等待；预算耗尽后立即取消后续尝试。</li>
+<li><code>timeouts.backendRequest</code> 是每一次上游调用的独立超时。</li>
+<li><code>CircuitBreakerPolicy.connectionPool.maxRetries</code> 是并发重试容量上限，不是重试触发策略。</li>
+<li>当前 HTTPRoute 重试执行面是项目提供的 Inherent outbound 数据面；入站 L4 <code>dxproxy</code> 不终止 HTTP/gRPC 协议，因此不会重放应用请求。</li>
+</ul>
+<h2 id="_6">清理<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>kubectl<span class="w"> </span>-n<span class="w"> </span>moviereview<span class="w"> </span>delete<span class="w"> </span>httproute<span class="w"> </span>reviews-retry
+</span></code></pre></div>
+          
+        </article>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+
+<footer class="md-footer">
+  <nav class="md-footer__inner md-grid" aria-label="Footer">
+    <a href="../../request-timeouts/request-timeouts/" class="md-footer__link md-footer__link--prev" rel="prev">
+      <div class="md-footer__button md-icon">
+        <svg viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </div>
+      <div class="md-footer__title">
+        <span class="md-footer__direction">Previous</span>
+        <div class="md-ellipsis">请求超时</div>
+      </div>
+    </a>
+    <a href="../../fault-injection/fault-injection/" class="md-footer__link md-footer__link--next" rel="next">
+      <div class="md-footer__title">
+        <span class="md-footer__direction">Next</span>
+        <div class="md-ellipsis">故障注入</div>
+      </div>
+      <div class="md-footer__button md-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+      </div>
+    </a>
+  </nav>
+  <div class="md-footer-meta">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">Copyright © 2026 The Apache Kdubbo Team.</div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="../../../../../assets/kd-theme.js?v=20260726-r2"></script>
+<script src="../../../../../assets/custom.js?v=20260726-r2"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+<script src="../../../../../assets/mermaid-init.js?v=20260809-responsive-r1"></script>
+<script src="../../../../../search/main.js"></script>
+</body>
+</html>

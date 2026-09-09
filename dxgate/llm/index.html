@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh" data-md-color-scheme="default">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LLM Service - Apache Dubbo Inherent Mesh</title>
+  <link rel="canonical" href="https://kdubbo.github.io/dxgate/llm/">
+  <link rel="icon" href="../../assets/static/logo.ico">
+  <meta name="generator" content="mkdocs-1.6.1">
+  <link rel="stylesheet" href="../../assets/kd-theme.css?v=20260820-r2">
+  <link rel="stylesheet" href="../../assets/custom.css?v=20260809-responsive-r1">
+  <script id="__config" type="application/json">{"base": "../..", "lang": "zh"}</script>
+  
+</head>
+<body dir="ltr">
+
+<aside class="kd-build-notice" role="status" aria-label="文档状态">
+  <span>
+    文档当前处于建设阶段，所有内容均不可用，新版本即将推出。
+  </span>
+</aside>
+
+<input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+<input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+<label class="md-overlay" for="__drawer"></label>
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Apache Dubbo Inherent Mesh">
+    <a href="../.." class="md-header__button md-logo" aria-label="Apache Dubbo Inherent Mesh">
+      <img src="../../assets/static/logo.png" alt="logo">
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="菜单">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title">
+      <div class="md-header__ellipsis">
+        <span class="md-header__topic">Apache Dubbo Inherent Mesh</span>
+      </div>
+    </div>
+    <div class="md-header__spacer"></div><div class="md-search" role="search">
+      <div class="md-search__inner">
+        <form class="md-search__form" autocomplete="off" onsubmit="return false">
+          <input type="search" class="md-search__input" name="query" aria-label="搜索"
+                 placeholder="搜索" autocapitalize="off" autocorrect="off" spellcheck="false">
+          <label class="md-search__icon md-icon" for="__search" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+          </label>
+        </form>
+        <div class="md-search__output">
+          <div class="md-search__scrollwrap">
+            <div class="md-search-result">
+              <ol class="md-search-result__list" role="presentation"></ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+
+<div class="md-container" data-md-component="container">
+  <main class="md-main" data-md-component="main">
+    <div class="md-main__inner md-grid">
+      <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+        <div class="md-sidebar__scrollwrap">
+          <div class="md-sidebar__inner">
+            <nav class="md-nav md-nav--primary kd-nav--standalone" aria-label="dxgate">
+              <ul class="md-nav__list" data-md-scrollfix>
+                <li class="md-nav__item md-nav__item--nested">
+                  <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-dx1">
+                  <label class="md-nav__link" for="__nav-dx1">概念<span class="md-nav__icon md-icon"></span></label>
+                  <nav class="md-nav" aria-label="概念">
+                    <ul class="md-nav__list">
+                      <li class="md-nav__item">
+                        <a href="../" class="md-nav__link">dxgate 是什么</a>
+                      </li>
+                      <li class="md-nav__item">
+                        <a href="../architecture/" class="md-nav__link">网关架构</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </li>
+                <li class="md-nav__item md-nav__item--nested">
+                  <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-dx2">
+                  <label class="md-nav__link" for="__nav-dx2">服务路由<span class="md-nav__icon md-icon"></span></label>
+                  <nav class="md-nav" aria-label="服务路由">
+                    <ul class="md-nav__list">
+                      <li class="md-nav__item">
+                        <a href="../http-service/" class="md-nav__link">普通 Service</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </li>
+                <li class="md-nav__item md-nav__item--nested md-nav__item--active">
+                  <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-dx3" checked>
+                  <label class="md-nav__link" for="__nav-dx3">LLM<span class="md-nav__icon md-icon"></span></label>
+                  <nav class="md-nav" aria-label="LLM">
+                    <ul class="md-nav__list">
+                      <li class="md-nav__item md-nav__item--active">
+                        <a href="./" class="md-nav__link" aria-current="page">LLM 路由</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </li>
+                <li class="md-nav__item md-nav__item--nested">
+                  <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-dx4">
+                  <label class="md-nav__link" for="__nav-dx4">MCP<span class="md-nav__icon md-icon"></span></label>
+                  <nav class="md-nav" aria-label="MCP">
+                    <ul class="md-nav__list">
+                      <li class="md-nav__item">
+                        <a href="../mcp/" class="md-nav__link">MCP 路由</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </li>
+                <li class="md-nav__item md-nav__item--nested">
+                  <input class="md-nav__toggle md-toggle" type="checkbox" id="__nav-dx5">
+                  <label class="md-nav__link" for="__nav-dx5">Agent<span class="md-nav__icon md-icon"></span></label>
+                  <nav class="md-nav" aria-label="Agent">
+                    <ul class="md-nav__list">
+                      <li class="md-nav__item">
+                        <a href="../a2a/" class="md-nav__link">A2A 转发</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+        <div class="md-sidebar__scrollwrap">
+          <div class="md-sidebar__inner">
+            <nav class="md-nav md-nav--secondary" aria-label="目录">
+              <span class="md-nav__title">本页目录</span>
+              <ul class="md-nav__list">
+                
+  <li class="md-nav__item">
+    <a href="#1-llm" class="md-nav__link">1. LLM 三大账号池类型</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#2" class="md-nav__link">2. 调度与容灾策略</a>
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+  <li class="md-nav__item">
+    <a href="#aflat-weighted-round-robin" class="md-nav__link">模式 A：默认平权调度（Flat Weighted Round-Robin）</a>
+  </li>
+        
+  <li class="md-nav__item">
+    <a href="#buser-defined-priority" class="md-nav__link">模式 B：用户自定义优先级（User-Defined Priority）</a>
+  </li>
+        
+  <li class="md-nav__item">
+    <a href="#prompt-cache" class="md-nav__link">会话粘滞与 Prompt Cache 锁定</a>
+  </li>
+      </ul>
+    </nav>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#3-dxgateservice" class="md-nav__link">3. DxgateService 配置示例</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#4-httproute" class="md-nav__link">4. HTTPRoute 路由绑定</a>
+  </li>
+                
+  <li class="md-nav__item">
+    <a href="#5-web-ui-llm-services" class="md-nav__link">5. Web UI 【LLM Services】 控制台设计规范</a>
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+  <li class="md-nav__item">
+    <a href="#ui" class="md-nav__link">UI 设计核心亮点：</a>
+  </li>
+      </ul>
+    </nav>
+  </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="md-content" data-md-component="content">
+        <article class="md-content__inner md-typeset">
+          
+          <h1 id="llm-service">LLM Service<a class="headerlink" href="#llm-service" title="Permanent link">&para;</a></h1>
+<p>客户端始终可以使用 OpenAI 格式接入。dxgate 在 LLM 模块（<code>spec.ai</code>）内集成了<strong>多协议全双工转换引擎</strong>与<strong>多账号资源池（Account Pool）</strong>，统一调度自建私有算力、包月订阅与云端按量 API。</p>
+<div class="mermaid">flowchart TB
+  client["OpenAI-format Client&lt;br/&gt;(Curl / LangChain / SDK)"] --&gt; gateway["dxgate (LLM Gateway)"]
+
+  subgraph pool["LLM 多账号池 (spec.ai.provider.pool)"]
+    direction TB
+    selfHosted["self-hosted (vLLM / Ollama)"]
+    subOAuth["subscription (ChatGPT / Claude OAuth)"]
+    apiKey["api-key (OpenAI / Anthropic PAYG)"]
+  end
+
+  gateway --&gt; pool
+  pool --&gt;|Direct / OpenAI| vllm["vLLM / DeepSeek Cluster"]
+  pool --&gt;|OAuth / Wire Format| openai["OpenAI / ChatGPT"]
+  pool --&gt;|Protocol Translation + SSE| anthropic["Anthropic Claude"]</div>
+<hr />
+<h2 id="1-llm">1. LLM 三大账号池类型<a class="headerlink" href="#1-llm" title="Permanent link">&para;</a></h2>
+<p>LLM 模块原生支持将不同来源的算力汇聚在同一个网关端点：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">账号类型 (<code>type</code>)</th>
+<th style="text-align: left;">认证机制</th>
+<th style="text-align: left;">成本与计费</th>
+<th style="text-align: left;">运行特性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong><code>self-hosted</code></strong></td>
+<td style="text-align: left;">Endpoint URL + 可选 Token</td>
+<td style="text-align: left;"><strong>0 边际成本</strong> (统计 GPU 并发与队列)</td>
+<td style="text-align: left;">内网私有化 vLLM、SGLang、Ollama 等集群；支持 <code>maxConcurrency</code> 并发阈值保护。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>subscription</code></strong></td>
+<td style="text-align: left;">OAuth Refresh Token Secret</td>
+<td style="text-align: left;"><strong>固定包月</strong> (统计 ChatGPT/Claude Credits)</td>
+<td style="text-align: left;">团队采购的 ChatGPT Plus/Pro (Codex)、Claude Code 账号；后台协程自动续约 Token。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong><code>api-key</code></strong></td>
+<td style="text-align: left;">API Key Secret (<code>Bearer</code> / <code>x-api-key</code>)</td>
+<td style="text-align: left;"><strong>按 Token 消耗美元</strong> (实时 USD 账本)</td>
+<td style="text-align: left;">OpenAI、Anthropic、DeepSeek 官方 Key；支持 RPM/TPM 限额保护。</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2">2. 调度与容灾策略<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>网关<strong>不预设任何强制性的硬编码优先级</strong>，一切调度行为由用户声明决定：</p>
+<h3 id="aflat-weighted-round-robin">模式 A：默认平权调度（Flat Weighted Round-Robin）<a class="headerlink" href="#aflat-weighted-round-robin" title="Permanent link">&para;</a></h3>
+<p>若用户<strong>未配置</strong> <code>priority</code> 参数，所有配置的账号处于平等地位，网关按 <code>weight</code> 比例平权轮询分发流量。任意账号遇到 <code>429</code>（限流）或 <code>503</code>（队列满）时，自动触发毫秒级故障转移（Failover），平滑切至池内其他健康节点。</p>
+<h3 id="buser-defined-priority">模式 B：用户自定义优先级（User-Defined Priority）<a class="headerlink" href="#buser-defined-priority" title="Permanent link">&para;</a></h3>
+<p><strong>仅当用户显式指定</strong> <code>priority</code> 参数（数字越小越优先，如 <code>priority: 1</code> 优先于 <code>priority: 2</code>）时，网关严格按用户定义的优先级顺序进行主备/分层溢出调度：
+- 优先将请求打满 <code>priority: 1</code> 账号池；
+- 当 <code>priority: 1</code> 账号全部因频次超限进入冷却时，<strong>无感溢出</strong>至 <code>priority: 2</code> 账号，确保业务不报 429。</p>
+<h3 id="prompt-cache">会话粘滞与 Prompt Cache 锁定<a class="headerlink" href="#prompt-cache" title="Permanent link">&para;</a></h3>
+<ul>
+<li>开启 <code>sessionAffinity: true</code> 时，网关依据客户端会话头（如 <code>x-session-id</code>）或对话上下文将请求锁定在特定账号上，<strong>吃满上游大模型的 Prompt Caching（前缀提示词缓存）</strong>，可降低最高 90% 的延迟与 Token 开销。</li>
+</ul>
+<hr />
+<h2 id="3-dxgateservice">3. DxgateService 配置示例<a class="headerlink" href="#3-dxgateservice" title="Permanent link">&para;</a></h2>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.dubbo.apache.org/v1alpha3</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DxgateService</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nt">metadata</span><span class="p">:</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llm-gateway</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dubbo-system</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="nt">ai</span><span class="p">:</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="nt">provider</span><span class="p">:</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">      </span><span class="nt">openai</span><span class="p">:</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">        </span><span class="c1"># LLM 统一账号池定义</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">        </span><span class="nt">pool</span><span class="p">:</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">          </span><span class="c1"># --- 自建算力 ---</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vllm-deepseek-r1</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">            </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">self-hosted</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">            </span><span class="nt">weight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">            </span><span class="nt">endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://vllm-cluster.ai-infra.svc:8000/v1</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">            </span><span class="nt">maxConcurrency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">64</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">          </span><span class="c1"># --- 订阅账号 (自动续约) ---</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">codex-team-01</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">            </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">subscription</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">            </span><span class="nt">weight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">            </span><span class="nt">credentialRef</span><span class="p">:</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">              </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oauth-codex-01</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">              </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">token.json</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">          </span><span class="c1"># --- 官方 API Key 兜底 ---</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai-official-key</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">            </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api-key</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="w">            </span><span class="nt">weight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="w">            </span><span class="nt">credentialRef</span><span class="p">:</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">              </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai-secret</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="w">              </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">token</span>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="w">        </span><span class="nt">models</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">gpt-5</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">claude-sonnet-4</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">deepseek-r1</span><span class="p p-Indicator">]</span>
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="w">        </span><span class="nt">routes</span><span class="p">:</span>
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="w">          </span><span class="nt">/v1/chat/completions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">COMPLETIONS</span>
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="w">          </span><span class="nt">/v1/responses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RESPONSES</span>
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="w">  </span><span class="nt">policies</span><span class="p">:</span>
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="w">    </span><span class="nt">scheduling</span><span class="p">:</span>
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a><span class="w">      </span><span class="nt">sessionAffinity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">             </span><span class="c1"># 开启会话粘滞 (Prompt Cache 优先)</span>
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a><span class="w">    </span><span class="nt">cooldown</span><span class="p">:</span>
+</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a><span class="w">      </span><span class="nt">onRateLimit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300s</span><span class="w">                 </span><span class="c1"># 遇到 429 自动冷却 5 分钟</span>
+</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="w">      </span><span class="nt">onQueueFull</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30s</span><span class="w">                  </span><span class="c1"># 自建节点队列满冷却 30 秒</span>
+</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a><span class="w">      </span><span class="nt">autoRefreshOAuth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">            </span><span class="c1"># 自动续期订阅 OAuth Token</span>
+</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="w">    </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60s</span>
+</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="w">    </span><span class="nt">retry</span><span class="p">:</span>
+</span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a><span class="w">      </span><span class="nt">attempts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a><span class="w">      </span><span class="nt">statusCodes</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">502</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">503</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">504</span><span class="p p-Indicator">]</span>
+</span></code></pre></div>
+<hr />
+<h2 id="4-httproute">4. HTTPRoute 路由绑定<a class="headerlink" href="#4-httproute" title="Permanent link">&para;</a></h2>
+<p>使用标准 Kubernetes Gateway API <code>HTTPRoute</code> 将外网流量引入 LLM 网关：</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.networking.k8s.io/v1</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HTTPRoute</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nt">metadata</span><span class="p">:</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llm-route</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dubbo-system</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="nt">spec</span><span class="p">:</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="nt">parentRefs</span><span class="p">:</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dxgate-proxy</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span><span class="nt">rules</span><span class="p">:</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">matches</span><span class="p">:</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path</span><span class="p">:</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">            </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PathPrefix</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">            </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/v1</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">      </span><span class="nt">backendRefs</span><span class="p">:</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llm-gateway</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">          </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.dubbo.apache.org</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">          </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DxgateService</span>
+</span></code></pre></div>
+<hr />
+<h2 id="5-web-ui-llm-services">5. Web UI 【LLM Services】 控制台设计规范<a class="headerlink" href="#5-web-ui-llm-services" title="Permanent link">&para;</a></h2>
+<p>遵循 <strong>瓷蓝蓝图（Porcelain Blueprint）</strong> 与现代工业级控制台设计美学，LLM 模块在 <code>/ui</code> 中提供了极具质感的实时监控看板：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>+---------------------------------------------------------------------------------------------------------------------+
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>|  dxgate Web UI  &gt;  LLM Services  &gt;  llm-gateway                                                        [ v0.5.0-p1 ] |
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>+---------------------------------------------------------------------------------------------------------------------+
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>|  [ 概览 Overview ]   [ 账号池 Credentials Pool (3) ]   [ 调度策略 Policies ]   [ 成本与账本 Cost Control ]          |
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>+---------------------------------------------------------------------------------------------------------------------+
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>  自建算力池 (Self-Hosted Compute)
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>  -------------------------------------------------------------------------------------------------------------------
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>  Instance ID         Endpoint / Host               Status        Concurrency   P95 Latency   Prompt Cache Rate  Action
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>  -------------------------------------------------------------------------------------------------------------------
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>  vllm-deepseek-r1    http://vllm-cluster:8000/v1   Ready      42 / 64       38 ms         78.4%              [探测] [下线]
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>  订阅型账号池 (Subscriptions - OAuth Managed)
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>  -------------------------------------------------------------------------------------------------------------------
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>  Account ID          Provider    Status            Usage (Credits)  Cooldown Remaining     OAuth Token Health Action
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>  -------------------------------------------------------------------------------------------------------------------
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>  codex-team-01       ChatGPT     Active         4,120 credits    --                     Valid (Expires in 27d) [测试] [暂停]
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>  codex-team-02       ChatGPT     Cooling (429)  6,850 credits    03m:18s             Valid (Expires in 19d) [重置] [测试]
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>  云端 API 按量型账号池 (API-Key / PAYG)
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>  -------------------------------------------------------------------------------------------------------------------
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>  Account ID          Provider    Status            Cost (USD)       Limits (RPM / TPM)     Active Leases      Action
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>  -------------------------------------------------------------------------------------------------------------------
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>  openai-official-key OpenAI      Standby        $ 18.45          3,000 / 250,000        0 connections      [编辑] [测试]
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>  今日吞吐汇总：自建算力承担 68.2% | 订阅账号承担 29.5% | 弹性 API 兜底 2.3% （预估为团队节省成本 $2,140 USD）
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>+---------------------------------------------------------------------------------------------------------------------+
+</span></code></pre></div>
+<h3 id="ui">UI 设计核心亮点：<a class="headerlink" href="#ui" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>即时状态微徽章（Micro-Status Badges）</strong>：</li>
+<li><code>Ready / Active</code>：健康监听中。</li>
+<li><code>Cooling</code>：展示动态退避倒计时（例如 <code>03m:18s</code>），倒计时归零后自动恢复可用。</li>
+<li><code>OAuth Valid</code>：展示 Token 剩余有效期及自动刷新协程状态。</li>
+<li><strong>三轨并行业务账本</strong>：</li>
+<li>独立追踪 GPU 算力并发利用率、ChatGPT 订阅 Credits 消耗、官方 API 美元账本，数据互不混淆。</li>
+<li><strong>极简操作交互</strong>：</li>
+<li>支持在 UI 上一键对特定账号发起 <code>[健康探测]</code>、<code>[强制冷却]</code> 或 <code>[手动下线]</code>。</li>
+</ol>
+          
+        </article>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+
+<footer class="md-footer">
+  <div class="md-footer-meta">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">Copyright © 2026 The Apache Kdubbo Team.</div>
+    </div>
+  </div>
+</footer>
+
+
+<script src="../../assets/kd-theme.js?v=20260726-r2"></script>
+<script src="../../assets/custom.js?v=20260726-r2"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+<script src="../../assets/mermaid-init.js?v=20260809-responsive-r1"></script>
+<script src="../../search/main.js"></script>
+</body>
+</html>

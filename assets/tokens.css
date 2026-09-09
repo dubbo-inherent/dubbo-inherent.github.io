@@ -1,0 +1,89 @@
+/* tokens.css — Design tokens (CSS variables) for color, radius, shadow, spacing, motion, typography, layout. Single source of truth for all visual values. */
+
+:root {
+  /* color — semantic (light "porcelain blueprint") */
+  --ds-color-bg: #EFF3F9;
+  --ds-color-bg-subtle: #E4EAF3;
+  --ds-color-surface: #FFFFFF;
+  --ds-color-surface-elevated: #E4EAF3;
+  --ds-color-border: rgba(26, 35, 50, 0.10);
+  --ds-color-border-strong: rgba(26, 35, 50, 0.24);
+  --ds-color-text-primary: #1A2332;
+  --ds-color-text-secondary: #3E4859;
+  --ds-color-text-muted: #636F80;
+  --ds-color-text-inverse: #FFFFFF;
+  --ds-color-accent: #1D5BC4;        /* 品牌蓝，与 --mesh-accent 一致 */
+  --ds-color-accent-hover: #1749A3;
+  --ds-color-accent-subtle: rgba(29, 91, 196, 0.12);
+  --ds-color-info: #1D5BC4;
+  --ds-color-success: #16a34a;
+  --ds-color-warning: #d97706;
+  --ds-color-danger: #dc2626;
+  --ds-color-code-inline-bg: #eef2f7;
+  --ds-color-code-inline-fg: #1A2332;
+  --ds-color-code-block-bg: #f4f4f5;
+
+  /* radius */
+  --ds-radius-sm: 4px;
+  --ds-radius-md: 8px;
+  --ds-radius-lg: 12px;
+  --ds-radius-pill: 999px;
+
+  /* shadow */
+  --ds-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.08);
+  --ds-shadow-md: 0 4px 14px rgba(15, 23, 42, 0.10);
+  --ds-shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.16);
+
+  /* spacing (4px 基数) */
+  --ds-space-0: 0;
+  --ds-space-1: 0.25rem;
+  --ds-space-2: 0.5rem;
+  --ds-space-3: 0.75rem;
+  --ds-space-4: 1rem;
+  --ds-space-5: 1.5rem;
+  --ds-space-6: 2rem;
+  --ds-space-7: 3rem;
+  --ds-space-8: 4rem;
+
+  /* motion */
+  --ds-motion-fast: 120ms;
+  --ds-motion-base: 200ms;
+  --ds-motion-slow: 360ms;
+  --ds-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* typography */
+  --ds-font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+  --ds-font-display: var(--ds-font-sans);
+  --ds-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", monospace;
+
+  /* layout */
+  --ds-content-max: 48rem;
+  --ds-grid-max: 88rem;
+}
+[data-md-color-scheme="slate"] {
+  /* single light scheme — mirror :root so a stale palette cookie can't
+     produce a broken half-dark page */
+  --ds-color-bg: #EFF3F9;
+  --ds-color-bg-subtle: #E4EAF3;
+  --ds-color-surface: #FFFFFF;
+  --ds-color-surface-elevated: #E4EAF3;
+  --ds-color-border: rgba(26, 35, 50, 0.10);
+  --ds-color-border-strong: rgba(26, 35, 50, 0.24);
+  --ds-color-text-primary: #1A2332;
+  --ds-color-text-secondary: #3E4859;
+  --ds-color-text-muted: #636F80;
+  --ds-color-text-inverse: #FFFFFF;
+  --ds-color-accent: #1D5BC4;
+  --ds-color-accent-hover: #1749A3;
+  --ds-color-accent-subtle: rgba(29, 91, 196, 0.12);
+  --ds-color-code-inline-bg: #E4EAF3;
+  --ds-color-code-inline-fg: #1A2332;
+  --ds-color-code-block-bg: #E4EAF3;
+  --ds-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.08);
+  --ds-shadow-md: 0 4px 14px rgba(15, 23, 42, 0.10);
+  --ds-shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.16);
+}
+
+:root {
+  /* Material theme bridge — neutralised; overrides.css is the single source of truth */
+}
