@@ -32,6 +32,15 @@ spec:
 
 Secret 值不进入 Kubernetes CRD、RDS 或 `/debug/config`。`dubbod` 只下发 `{namespace,name,key}`；dxgate 以网关 ServiceAccount 读取值并保存在内存。托管网关只获得自己命名空间的 `secrets/get`，跨命名空间引用被拒绝。
 
+## 认证文件管理 (Auth Files Vault)
+
+针对订阅型（ChatGPT / Claude / Codex OAuth Token 文件）及 API Key 凭证，dxgate 提供专用的认证文件管理控制台：
+
+- **提供方分类筛选**：支持按 Codex、Claude、Antigravity、xAI、Kimi 等提供方标签聚合；
+- **健康探测方块（20-Block Health Bar）**：记录最近 20 次请求的成功/失败状态，直观反映上游连通率；
+- **异常诊断横幅**：自动捕获 `unauthorized`、429 Cooldown 等状态并提供一键刷新/重新认证入口；
+- **凭证全生命周期操作**：支持模型映射、动态刷新 Token、加密下载、参数设置与一键启用/停用开关。
+
 ## 策略
 
 同一个 `policies` 对所有引用该 `DxgateService` 的 HTTPRoute 生效，支持：

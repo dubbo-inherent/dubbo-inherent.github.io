@@ -128,3 +128,19 @@ env:
 `--otel-tags` takes a JSON object and attaches its entries as resource attributes on every exported span. In production, lower the sampling rate and switch logs to `json` for your collector.
 
 Set these in the Deployment when installing.
+
+## Quota Management & Quota Windows Timeline
+
+For the three distinct compute pool architectures, dxgate provides a **three-track quota ledger engine** and **Quota Windows Timeline Gantt Chart**:
+
+### 1. Three-Track Compute Pool Quota Views
+
+| Compute Pool Type | Core Metric | Observability Representation | Protection & Failover Rules |
+| :--- | :--- | :--- | :--- |
+| **Self-Hosted Compute (`self-hosted`)** | **GPU Concurrency** & **Queue Latency** | **Concurrency Gauge & Queue Depth**<br/>e.g., `38 / 64 Concurrency (59.4%)`, P95 `42ms` | Triggers `onQueueFull` overflow to Tier 2 when hardware is saturated. |
+| **Subscription Pool (`subscription`)** | **Credits / Periodic %** & **Reset Timestamp** | **Quota Progress Bar + Timeline Gantt**<br/>e.g., `1% · 09/21 Reset`, 30d / 5h rolling bar | Automatic cooldown on 429/depletion with seamless rotation. |
+| **Cloud API Pool (`api-key`)** | **Real-time Cost (USD)** & **RPM/TPM Limits** | **Real-time USD Ledger + Rate Watermark**<br/>e.g., `$23.85 used today`, `3,000 / 250,000 TPM` | Exact token cost tracking with circuit-breaking on budget exhaustion. |
+
+### 2. Quota Windows Timeline
+
+The UI timeline supports **Weekly** and **5-Hour Rolling Window** views, allowing teams to visualize staggered reset schedules and prevent simultaneous rate-limiting across pooled accounts.

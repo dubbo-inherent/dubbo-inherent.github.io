@@ -1,18 +1,40 @@
-# Cost control
+# Cost Control
 
-After traffic hits dxgate, Cost Control writes two ledgers: API USD and ChatGPT subscription credits. No invented FX. Unknown models are not priced.
+After traffic hits dxgate, Cost Control writes three distinct ledgers: **Self-Hosted Throughput**, **Subscription Credits**, and **API USD**. No artificial exchange rates. Unknown models are not priced.
 
-See `/ui` → Cost Control. The middle pane is a usage flame tape (candles + cumulative mountain), or `GET /debug/cost`.
+Access: `/ui` → Cost Control, or via the management endpoint `GET /debug/cost`.
 
-## ChatGPT subscription (Codex)
+---
 
-Do not set a provider key. Codex stays on ChatGPT login; a profile sends requests to dxgate. Any `usage` is quoted.
+## 1. Three-Track Cost Model
 
-| Item | Value |
-| --- | --- |
-| Codex | `~/.codex/config.toml` |
-| Start | `codex --profile dxgate` |
-| DxgateService | `spec.ai.provider.openai: {}`, no `credential` |
+| Ledger Track | Account Pool | Metric Unit | Cost Attributes |
+| :--- | :--- | :--- | :--- |
+| **Self-Hosted Compute** | `self-hosted` | Concurrency / Token Throughput | **$0 Marginal Cost** (Tracks GPU load & queue latency) |
+| **Monthly Subscriptions** | `subscription` | ChatGPT / Claude Credits | **Fixed Monthly** (Tracks period quota usage & reset dates) |
+| **Cloud Commercial API** | `api-key` | Real USD (Tiered per Token) | **Pay-As-You-Go** (Calculates per-request USD ledger) |
+
+---
+
+## 2. Subscription Configuration (Codex / ChatGPT / Claude)
+
+Uses OAuth credentials with background auto-refresh. Quotas are recorded whenever `usage` is returned:
+
+```yaml
+spec:
+  ai:
+    provider:
+      openai:
+        pool:
+          - id: codex-sub-01
+            type: subscription
+            weight: 100
+            credentialRef:
+              name: oauth-codex-01
+              key: token.json
+```
+
+Local Codex client configuration:
 
 ```toml
 [model_providers.dxgate]
@@ -21,19 +43,15 @@ base_url = "http://127.0.0.1:8080/v1"
 wire_api = "chat"
 
 [profiles.dxgate]
-model = "gpt-5.6-sol"
+model = "gpt-5"
 model_provider = "dxgate"
 ```
 
-## API
+---
 
-A provider Secret injects the API key. Clients call the gateway `/v1`.
+## 3. Pay-As-You-Go API Configuration
 
-| Item | Value |
-| --- | --- |
-| Secret | `openai-secret`, key `Authorization` |
-| DxgateService | `spec.ai.provider.openai` plus `credential` |
-| Client | `curl http://gateway/v1/chat/completions` |
+Inject API keys via Secret, clients connect via `/v1`:
 
 ```bash
 kubectl -n dubbo-system create secret generic openai-secret \
@@ -41,20 +59,36 @@ kubectl -n dubbo-system create secret generic openai-secret \
 ```
 
 ```yaml
-apiVersion: networking.dubbo.apache.org/v1alpha3
-kind: DxgateService
-metadata:
-  name: openai
-  namespace: dubbo-system
 spec:
   ai:
     provider:
-      openai: {}
-      credential:
-        name: openai-secret
-        key: Authorization
-    routes:
-      /v1/chat/completions: COMPLETIONS
+      openai:
+        pool:
+          - id: openai-official
+            type: api-key
+            weight: 100
+            credentialRef:
+              name: openai-secret
+              key: Authorization
 ```
 
-The rate card is GPT-5.6 Sol / Terra / Luna only. See [LLM routing](llm.md).
+---
+
+## 4. Self-Hosted Compute Configuration
+
+In-cluster vLLM / SGLang / Ollama clusters with $0 API fees, monitoring GPU throughput and concurrency limits:
+
+```yaml
+spec:
+  ai:
+    provider:
+      openai:
+        pool:
+          - id: vllm-deepseek-r1
+            type: self-hosted
+            weight: 100
+            endpoint: http://vllm-service.ai-infra.svc:8000/v1
+            maxConcurrency: 64
+```
+
+See [LLM Services](llm.md) for full multi-account pooling and priority routing details.

@@ -9,28 +9,61 @@ kind: DxgateService
 
 One object selects exactly one of `spec.ai`, `spec.mcp`, or `spec.a2a`. Ordinary HTTP backends do not create a `DxgateService`; they keep referencing a Kubernetes `Service` directly.
 
-## LLM
+## LLM (Multi-Account Pool & Protocol Gateway)
 
-The OpenAI client format can route to OpenAI or Anthropic. Credentials are Secret references only:
+The OpenAI client format can uniformly route to self-hosted clusters, OpenAI, or Anthropic. Credentials are same-namespace Secret references only.
+
+The LLM module natively supports three account pool types (Self-Hosted compute `self-hosted`, monthly subscriptions `subscription`, and pay-as-you-go `api-key`):
+- **Default Flat Scheduling**: When `priority` is omitted, all accounts in the pool use weighted round-robin based on `weight`; 429 or outages trigger automatic failover.
+- **Custom Priority**: Only when the user explicitly configures `priority: 1, 2...`, the gateway routes strictly in numerical order for primary/backup tiering.
 
 ```yaml
 apiVersion: networking.dubbo.apache.org/v1alpha3
 kind: DxgateService
 metadata:
   name: chat
+  namespace: dubbo-system
 spec:
   ai:
-    endpoint: https://api.anthropic.com
     provider:
-      anthropic:
-        model: claude-sonnet-4
-      credential:
-        name: provider-key
-        key: token
-    models: [claude-sonnet-4]
-    routes:
-      /v1/chat/completions: COMPLETIONS
+      openai:
+        # LLM unified multi-account pool
+        pool:
+          # --- 1. Self-hosted private compute (Optional) ---
+          - id: vllm-deepseek-r1
+            type: self-hosted
+            weight: 100
+            endpoint: http://vllm-cluster.ai-infra.svc:8000/v1
+            maxConcurrency: 64
+
+          # --- 2. Team monthly subscription (Auto OAuth refresh) ---
+          - id: codex-team-sub
+            type: subscription
+            weight: 100
+            credentialRef:
+              name: oauth-codex-team
+              key: token.json
+
+          # --- 3. Official PAYG API Key ---
+          - id: openai-official-key
+            type: api-key
+            weight: 50
+            credentialRef:
+              name: openai-secret
+              key: token
+
+        models: [gpt-5, claude-sonnet-4, deepseek-r1]
+        routes:
+          /v1/chat/completions: COMPLETIONS
+          /v1/responses: RESPONSES
+
   policies:
+    scheduling:
+      sessionAffinity: true             # Lock session to maximize upstream Prompt Cache hits
+    cooldown:
+      onRateLimit: 300s                 # Auto-cooldown for 5m on 429 with failover
+      onQueueFull: 30s                  # Cooldown for 30s on self-hosted queue saturation
+      autoRefreshOAuth: true            # Background auto-refresh for subscription OAuth tokens
     timeout: 30s
     retry:
       attempts: 2

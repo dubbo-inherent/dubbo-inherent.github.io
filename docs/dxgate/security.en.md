@@ -32,6 +32,15 @@ spec:
 
 The Secret value never enters the Kubernetes CRD, RDS, or `/debug/config`. `dubbod` sends only `{namespace,name,key}`; dxgate reads the value with the gateway ServiceAccount and keeps it in memory. A managed gateway gets only same-namespace `secrets/get`, and cross-namespace references are rejected.
 
+## Auth Files Management (Credentials Vault)
+
+For subscription tokens (ChatGPT / Claude / Codex OAuth token files) and API Key credentials, dxgate provides a dedicated credentials management console:
+
+- **Provider Filter Tabs**: Filter by Codex, Claude, Antigravity, xAI, Kimi, and OpenAI;
+- **20-Block Health Bar**: Tracks the last 20 request probes (success/failure) for instant health visibility;
+- **Diagnostic Banners**: Automatically highlights `unauthorized` or 429 Cooldown states with quick token refresh triggers;
+- **Full Credential Lifecycle**: Supports model aliasing, dynamic token refresh, encrypted export, and enable/disable toggles.
+
 ## Policies
 
 One `policies` block applies to every HTTPRoute that references the `DxgateService`. It supports:
